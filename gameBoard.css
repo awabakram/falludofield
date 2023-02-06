@@ -1,5 +1,6 @@
 *{
-    padding: 10px;
+    padding: 0;
+    margin: 0;
 
 }
 /*Setting the template for the the contents of the page*/
@@ -7,38 +8,60 @@ body{
     align-items: center;
     justify-content: center;
     display: flex;
+    background-color: rebeccapurple;
 }
-/**/
+/*Adding the black base of the gamboard*/
 .gameboard{
-    padding-top: 100px;
     background-color: rgba(0, 0, 0, 0.932);
-    width: 800px;
-    height: 600px;
+    width: 750px;
+    height: 750px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 
 /*Adding colour coordinated corners to the board*/
 .red{
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     background-color: rgba(255, 0, 0, 0.935);
+    justify-content: center;
+    display: flex;
+    align-items: center;
 
     }
 .blue{
-    width: 250px;
-    height: 250px;
-    background-color: rgb(0, 89, 255);
+    width: 300px;
+    height: 300px;
+    background-color:royalblue;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 .green{
-    width: 250px;
-    height: 250px;
-    background-color: green;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(0, 128, 0, 0.962);
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 
 .yellow{
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     background-color: rgba(255, 255, 0, 0.935);
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+}
+
+/*Inside of each corner(hall)*/
+
+.inside{
+    width: 230px;
+    height: 230px;
+    background-color: rgba(0, 0, 0, 0.932);
 }
