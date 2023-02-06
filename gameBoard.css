@@ -61,8 +61,8 @@ body{
 
 /*The inside of the corners*/
 .inside{
-    width: 230px;
-    height: 230px;
+    width: 200px;
+    height: 200px;
     background-color: rgba(0, 0, 0, 0.932);
     flex-wrap: wrap;
     align-items: center;
@@ -75,12 +75,11 @@ body{
 .innerSpace{
     width: 50px;
     height: 50px;
-    margin: 30px;
+    margin: 25px;
 }
 
 .red .innerSpace{
     background-color: rgba(255, 0, 0, 0.935);
-
 }
 
 .blue .innerSpace{
@@ -93,4 +92,27 @@ body{
 
 .yellow .innerSpace{
     background-color:rgba(255, 255, 0, 0.935) ;
+}
+
+/*Actual Game Spaces*/
+.spaces{
+    width: 48px;
+    height: 48px;
+    border: 1px solid white;
+}
+
+.verticalSpaces{
+    display: flex;
+}
+
+
+.horizontalSpaces{
+    width: 750px;
+    height: 150px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.topRow{
+    display: flex;
 }
