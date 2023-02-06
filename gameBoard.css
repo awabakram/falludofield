@@ -1,0 +1,44 @@
+*{
+    padding: 10px;
+
+}
+/*Setting the template for the the contents of the page*/
+body{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+/**/
+.gameboard{
+    padding-top: 100px;
+    background-color: rgba(0, 0, 0, 0.932);
+    width: 800px;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/*Adding colour coordinated corners to the board*/
+.red{
+    width: 250px;
+    height: 250px;
+    background-color: rgba(255, 0, 0, 0.935);
+
+    }
+.blue{
+    width: 250px;
+    height: 250px;
+    background-color: rgb(0, 89, 255);
+}
+.green{
+    width: 250px;
+    height: 250px;
+    background-color: green;
+}
+
+.yellow{
+    width: 250px;
+    height: 250px;
+    background-color: rgba(255, 255, 0, 0.935);
+}
