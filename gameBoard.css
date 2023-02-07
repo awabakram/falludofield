@@ -22,6 +22,7 @@ body{
     justify-content: space-between;
     border: 1px solid white;
 
+
 }
 
 
@@ -125,15 +126,26 @@ body{
     display: flex;
 }
 
+/*Dice Settings*/
 
-.dice{
-    width: 48px;
-    height: 48px;
+.dice, .dice2{
+    width: 50px;
+    height: 50px;
     border: 3px solid black;
     background-color: white;
+    margin: 5px;
 
 }
 
+
+.bothDice{
+    display:flex;
+    margin-left: -170px;
+}
+
+.rollMechanism{
+    display: flex;
+}
 
 
 .logOutButton, .leaderboardButton, .rollDiceButton{
@@ -141,7 +153,22 @@ body{
     color: rebeccapurple;
     padding: 15px 32px;
     display: inline-block;
-    font-size: 16px;
+    font-size: 18px;
     font: bold;
+    display: flex;
 }
+
+.logOutButton, .leaderboardButton{
+    margin-bottom: 690px;
+}
+
+.logOutButton{
+    margin-right: 150px;
+}
+
+.leaderboardButton{
+    margin-left: 50px;  
+}
+
+
 
