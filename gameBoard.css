@@ -1,7 +1,6 @@
 *{
     padding: 0;
     margin: 0;
-
 }
 /*Setting the template for the the contents of the page*/
 body{
@@ -21,8 +20,6 @@ body{
     flex-wrap: wrap;
     justify-content: space-between;
     border: 1px solid white;
-
-
 }
 
 
