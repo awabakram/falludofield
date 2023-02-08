@@ -128,13 +128,15 @@ body{
 
 /*Dice Settings*/
 
-.dice, .dice2{
+#dice, #dice2{
     width: 50px;
     height: 50px;
     border: 3px solid black;
     background-color: white;
     margin: 5px;
-
+    font-size: 18px;
+    font: bold;
+    color: rebeccapurple;
 }
 
 
