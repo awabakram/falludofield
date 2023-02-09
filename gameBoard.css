@@ -10,43 +10,41 @@ body{
     display: flex;
     background-color: rebeccapurple;
     justify-content: space-around;
-
 }
+
 /*Adding the black base of the gamboard*/
 .gameboard{
     background-color: rgba(0, 0, 0, 0.932);
-    width: 750px;
-    height: 750px;
+    width: 100vh;
+    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     border: 1px solid white;
-
 }
 
 
 /*Adding colour coordinated corners to the board*/
 .red{
-    width: 300px;
-    height: 300px;
+    width: 40vh;
+    height: 40vh;
     background-color: rgba(255, 0, 0, 0.935);
     justify-content: center;
     display: flex;
     align-items: center;
-    
-
     }
+
 .blue{
-    width: 300px;
-    height: 300px;
+    width: 40vh;
+    height: 40vh;
     background-color:royalblue;
     justify-content: center;
     display: flex;
     align-items: center;
 }
 .green{
-    width: 300px;
-    height: 300px;
+    width: 40vh;
+    height: 40vh;
     background-color: rgba(0, 128, 0, 0.962);
     justify-content: center;
     display: flex;
@@ -54,19 +52,18 @@ body{
 }
 
 .yellow{
-    width: 300px;
-    height: 300px;
+    width: 40vh;
+    height: 40vh;
     background-color: rgba(255, 255, 0, 0.935);
     justify-content: center;
     display: flex;
     align-items: center;
-
 }
 
 /*The inside of the corners*/
 .inside{
-    width: 200px;
-    height: 200px;
+    width: 26vh;
+    height: 26vh;
     background-color: rgba(0, 0, 0, 0.932);
     flex-wrap: wrap;
     align-items: center;
@@ -74,16 +71,15 @@ body{
     display: flex;
     justify-content: space-between;
     border: 1px solid white;
-
 }
 
 /*Where the pieces initially stand*/
 .innerSpace{
-    width: 50px;
-    height: 50px;
-    margin: 24px;
+    width: 6vh;
+    height: 6vh;
+    margin: 3.2vh;
     border: 1px solid white;
-
+    position: relative;
 }
 
 .red .innerSpace{
@@ -104,8 +100,8 @@ body{
 
 /*Actual Game Spaces*/
 .spaces{
-    width: 48px;
-    height: 48px;
+    width: 6.39vh;
+    height: 6.39vh;
     border: 1px solid white;
 }
 
@@ -115,8 +111,8 @@ body{
 
 
 .horizontalSpaces{
-    width: 750px;
-    height: 150px;
+    width: 100vh;
+    height: 20vh;
     justify-content: space-between;
     display: flex;
 }
@@ -141,7 +137,7 @@ body{
 
 .bothDice{
     display:flex;
-    margin-left: -170px;
+
 }
 
 .rollMechanism{
@@ -160,18 +156,20 @@ body{
 }
 
 .logOutButton, .leaderboardButton{
-    margin-bottom: 690px;
+    margin-bottom: 93vh;
 }
 
 .logOutButton{
-    margin-right: 150px;
+    margin-right: 30vh;
 }
 
 .leaderboardButton{
-    margin-left: 50px;  
+    margin-left: 10px;  
 }
 
 .spaces:hover {
     background-color: darkmagenta;
 }
+
+
 
