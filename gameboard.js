@@ -1,4 +1,11 @@
-
+class piece 
+{
+    constructor(colour, position)
+    {
+        this.colour = colour;
+        this.position = position;
+    }
+}
 
 //varaibles to show the current value of the two dice
 let dice1 = 1;
@@ -19,8 +26,9 @@ function randomInt(min, max)
 //function to roll the two dice
 function rollDice()
 {
-        dice1 = randomInt(1,6);
-        dice2 = randomInt(1,6);
-        document.getElementsById("dice").innerHTML = dice1.toString();
-        document.getElementById("dice2").innerHTML = dice2.toString();
+    dice1 = randomInt(1,6);
+    dice2 = randomInt(1,6);
+    document.getElementsById("dice").innerHTML = dice1.toString();
+    document.getElementById("dice2").innerHTML = dice2.toString();
 }
+
