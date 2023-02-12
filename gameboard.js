@@ -28,7 +28,52 @@ function rollDice()
 {
     dice1 = randomInt(1,6);
     dice2 = randomInt(1,6);
-    document.getElementsById("dice").innerHTML = dice1.toString();
-    document.getElementById("dice2").innerHTML = dice2.toString();
+    switch (dice1)
+    {
+        case 1:
+            document.getElementById("dice").style.backgroundImage = 'url("/Dice1.jpeg")';
+            break;
+        case 2:
+            document.getElementById("dice").style.backgroundImage = 'url("/Dice2.jpeg")';
+            break;
+        case 3:
+            document.getElementById("dice").style.backgroundImage = 'url("/Dice3.jpeg")';
+            break;
+        case 4:
+            document.getElementById("dice").style.backgroundImage = 'url("/Dice4.jpeg")';
+            break;
+        case 5:
+            document.getElementById("dice").style.backgroundImage = 'url("/Dice5.jpeg")';
+            break;
+        case 6:
+            document.getElementById("dice").style.backgroundImage = 'url("/Dice6.jpeg")';
+            break;
+
+    }
+    switch (dice2)
+    {
+        case 1:
+            document.getElementById("dice2").style.backgroundImage = 'url("/Dice1.jpeg")';
+            break;
+        case 2:
+            document.getElementById("dice2").style.backgroundImage = 'url("/Dice2.jpeg")';
+            break;
+        case 3:
+            document.getElementById("dice2").style.backgroundImage = 'url("/Dice3.jpeg")';
+            break;
+        case 4:
+            document.getElementById("dice2").style.backgroundImage = 'url("/Dice4.jpeg")';
+            break;
+        case 5:
+            document.getElementById("dice2").style.backgroundImage = 'url("/Dice5.jpeg")';
+            break;
+        case 6:
+            document.getElementById("dice2").style.backgroundImage = 'url("/Dice6.jpeg")';
+            break;
+
+    }
+
+    //document.getElementById("dice").innerHTML = dice1.toString();
+    //document.getElementById("dice2").innerHTML = dice2.toString();
 }
 
