@@ -16,12 +16,50 @@
     }
 
     #createDatabase("falludofieldDatabase");
-    createTables("UserTable");
+    #createTables("UserTable");
+    #addUser("Shazil123", "shazil", "shazil.shahzad@student.manchester.ac.uk", "bestPassword");
+    #getUser(1);
 
+    function getUser($id)
+    {
+        $sql = "SELECT username, nickname, email, password
+        FROM UserTable
+        WHERE userId = :id";
+
+        $pdo = new pdo('mysql:host=localhost;dbname=mydb',
+        'root', 'root');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+        'id' => $id
+        ]);
+        
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        while ($row = $stmt->fetch())
+        {
+            echo("<br>" . $row['username'] . " " . $row['nickname'] .
+            " " .$row['email'] . " " . $row['password']);
+        }
+    }
+
+    function addUser($username, $nickname, $email, $password)
+    {
+        $sql = "INSERT INTO UserTable (username, nickname, email, password) VALUES (:username, :nickname, :email, :password)";
+
+        $pdo = new pdo('mysql:host=localhost;dbname=mydb', 'root', 'root');
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            'username' => $username,
+            'nickname' => $nickname,
+            'email' => $email,
+            'password' => $password
+        ]);
+}
 
     function createTables($dbName)
     {
-        $sql = "CREATE TABLE user (
+        $sql = "CREATE TABLE UserTable (
         userId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(30) NOT NULL,
         nickname VARCHAR(30) NOT NULL,
