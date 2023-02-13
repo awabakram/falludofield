@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?php include('form_validation.php'); ?>
     <link rel="stylesheet" href="form.css" />
     <title>Contact Player - falLUDOfield</title>
   </head>
   <body>
     <div class="container">
-      <form id="contact" action="" method="post">
+      <form id="contact" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
         <div id="top">
           <h3>Salman Ashraf</h3>
           <img src="user.png" alt="Player Image" id="userImg" />
@@ -18,41 +19,42 @@
         <fieldset>
           <input
             placeholder="Your name"
+            name="name"
             type="text"
             tabindex="1"
-            required
             autofocus
           />
         </fieldset>
         <fieldset>
           <input
             placeholder="Your Email Address"
-            type="email"
+            name="email"
+            type="text"
             tabindex="2"
-            required
           />
         </fieldset>
         <fieldset>
           <input
             placeholder="Your Phone Number"
-            type="tel"
+            name="number"
+            type="text"
             tabindex="3"
-            required
           />
         </fieldset>
         <fieldset>
           <input
-            placeholder="Your Web Site starts with http://"
-            type="url"
+            placeholder="Subject"
+            type="text"
+            name="subect"
             tabindex="4"
-            required
           />
         </fieldset>
         <fieldset>
           <textarea
             placeholder="Type your Message Here...."
+            type='text'
+            name="message"
             tabindex="5"
-            required
           ></textarea>
         </fieldset>
         <fieldset>
