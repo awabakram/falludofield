@@ -10,9 +10,24 @@
 
 
 <body>
-    <div class = "leftButton">
-        <button type= "button" class = "logOutButton"> Log Out</button> 
+    <div class="leftSide">
+        <div class = "leftButton">
+            <button type= "button" class = "logOutButton"> Logout</button> 
+        </div>
+    
+        <div>
+            <p class="turn">
+                It is players 1s turn
+            </p>
+        </div>
+
+        <div>
+            <p class="instructions">
+                Please click the roll dice button
+            </p>
+        </div>
     </div>
+
 
     <div class = "gameboard">
 <!--Colour boxes-->
@@ -169,21 +184,32 @@
             </div>
         </div>
 
-        
+    
 
 
     </div> 
     
-    <button type="button" class = "leaderboardButton">Leaderboard</button>
-    
-    <div class="rollMechanism">
-        <div class="bothDice">
-            <div id = "dice"></div>
-            <div id = "dice2"></div>  
+
+    <div class="rightSide">
+        <div>
+            <button type="button" class = "leaderboardButton">Leaderboard</button>
         </div>
-        <button type="button" class= "rollDiceButton" onclick="diceButtonPressed()">Roll Dice</button>
+
+        <div class="rollMechanism">
+            <div class="bothDice">
+                <div id = "dice"></div>
+                <div id = "dice2"></div>  
+            </div>
+            <div>
+                <button type="button" class= "rollDiceButton" onclick="diceButtonPressed()">Roll Dice</button>
+            </div>
+        </div>
     </div>
+
+
     <script src="gameboard.js"></script>
+
+
 </body>
 
 
