@@ -1,7 +1,9 @@
 class piece 
 {
-    constructor(colour, startPosition)
+    constructor(id, colour, startPosition)
     {
+        //each piece has a unique id identifier
+        this.id = id
         //colour indicates what colour the piece is
         this.colour = colour;
         //position is used to indicate how far along the path the piece is, used as an index for the path
@@ -52,42 +54,14 @@ class piece
         }
         //draw the piece at the start position
         document.getElementById(startPosition).style.backgroundImage = this.image;
-        document.getElementById(startPosition).innerHTML = this.colour[0];
     }
 
-    move(diceRoll) 
+    //method to delete the piece and reset its position back to its start position
+    reset()
     {
-        if (this.position == 0)
-        {
-            if (diceRoll == 6)
-            {
-                document.getElementById(this.path[this.position]).style.backgroundImage = "none";
-                document.getElementById(this.path[this.position]).innerHTML.replace(this.colour[0], "");
-                this.position = this.position++;
-                document.getElementById(this.path[this.position]).style.backgroundImage = this.image;
-                document.getElementById(this.path[this.position]).innerHTML += this.colour[0];
-            }
-            else
-            {
-                //TODO print "you need a 6 to take out this piece"
-            }
-        }
-        else
-        {
-            document.getElementById(this.path[this.position]).style.backgroundImage = "none";
-            document.getElementById(this.path[this.position]).innerHTML.replace(this.colour[0], "");
-            this.position += diceRoll;
-            if (this.position > this.path.length) //TODO check if its actually the length or if its shorter
-            {
-                completed = true;
-            }
-
-            //TODO ckecking if its a safe space, if it isnt then checking if theres an opponent piece and taking it (deleting it and setting its position to 0)
-            document.getElementById(this.path[this.position]).style.backgroundImage = this.image;
-            document.getElementById(this.path[this.position]).innerHTML += this.colour[0];
-        }
-        
-        
+        document.getElementById(this.path[this.position]).backgroundImage = "none";
+        this.position = 0;
+        document.getElementById(this.path[this.position]).backgroundImage = this.image;
     }
 }
 
@@ -103,6 +77,9 @@ let playerTurn = 1;
 
 //shows whether the game is finised yet
 let gameFinished = false;
+
+//array of all of the safe spaces on the board
+let safeSpaces = ["2", "10", "15", "23", "28", "36", "41", "49"];
 
 //function to retun a random number between two ints (inclusive)
 function randomInt(min, max)
@@ -169,28 +146,134 @@ function rollDice()
 //function to initialise all of the pieces
 function initialisePieces()
 {
-    yellowPiece1 = new piece("yellow", "insideYellow1");
-    yellowPiece2 = new piece("yellow", "insideYellow2");
-    yellowPiece3 = new piece("yellow", "insideYellow3");
-    yellowPiece4 = new piece("yellow", "insideYellow4");
+    pieces = [new piece("y0","yellow", "insideYellow1"), 
+    new piece("y1","yellow", "insideYellow2"),
+    new piece("y2","yellow", "insideYellow3"),
+    new piece("y3","yellow", "insideYellow4"),
+    new piece("g0","green", "insideGreen1"),
+    new piece("g1","green", "insideGreen2"),
+    new piece("g2","green", "insideGreen3"),
+    new piece("g3","green", "insideGreen4"),
+    new piece("b0","blue", "insideBlue1"),
+    new piece("b1","blue", "insideBlue2"),
+    new piece("b2","blue", "insideBlue3"),
+    new piece("b3","blue", "insideBlue4"),
+    new piece("r0","red", "insideRed1"),
+    new piece("r1","red", "insideRed2"),
+    new piece("r2","red", "insideRed3"),
+    new piece("r3","red", "insideRed4")]
 
-    //yellowPieces = [new piece("yellow", "insideYellow1"), new piece("yellow", "insideYellow2"),new piece("yellow", "insideYellow3"),new piece("yellow", "insideYellow4")]
+    // yellowPiece1 = new piece("y0","yellow", "insideYellow1");
+    // yellowPiece2 = new piece("y1","yellow", "insideYellow2");
+    // yellowPiece3 = new piece("y2","yellow", "insideYellow3");
+    // yellowPiece4 = new piece("y3","yellow", "insideYellow4");
 
-    greenPiece1 = new piece("green", "insideGreen1");
-    greenPiece2 = new piece("green", "insideGreen2");
-    greenPiece3 = new piece("green", "insideGreen3");
-    greenPiece4 = new piece("green", "insideGreen4");
+    // //yellowPieces = [new piece("yellow", "insideYellow1"), new piece("yellow", "insideYellow2"),new piece("yellow", "insideYellow3"),new piece("yellow", "insideYellow4")]
 
-    bluePiece1 = new piece("blue", "insideBlue1");
-    bluePiece2 = new piece("blue", "insideBlue2");
-    bluePiece3 = new piece("blue", "insideBlue3");
-    bluePiece4 = new piece("blue", "insideBlue4");
+    // greenPiece1 = new piece("g0","green", "insideGreen1");
+    // greenPiece2 = new piece("g1","green", "insideGreen2");
+    // greenPiece3 = new piece("g2","green", "insideGreen3");
+    // greenPiece4 = new piece("g3","green", "insideGreen4");
 
-    redPiece1 = new piece("red", "insideRed1");
-    redPiece2 = new piece("red", "insideRed2");
-    redPiece3 = new piece("red", "insideRed3");
-    redPiece4 = new piece("red", "insideRed4");
+    // bluePiece1 = new piece("b0","blue", "insideBlue1");
+    // bluePiece2 = new piece("b1","blue", "insideBlue2");
+    // bluePiece3 = new piece("b2","blue", "insideBlue3");
+    // bluePiece4 = new piece("b3","blue", "insideBlue4");
+
+    // redPiece1 = new piece("r0","red", "insideRed1");
+    // redPiece2 = new piece("r1","red", "insideRed2");
+    // redPiece3 = new piece("r2","red", "insideRed3");
+    // redPiece4 = new piece("r3","red", "insideRed4");
 }
+
+function move(pieceToMove, diceRoll) 
+{
+    //if its still inside you need a 6 to take it out
+    if (pieceToMove.position == 0)
+    {
+        if (diceRoll == 6)
+        {
+            document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = "none";
+            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML.replace(pieceToMove.colour[0], "");
+            pieceToMove.position = pieceToMove.position++;
+            document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = pieceToMove.image;
+            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML += pieceToMove.id + ",";
+        }
+        else
+        {
+            //TODO print "you need a 6 to take out this piece"
+        }
+    }
+    else
+    {
+        document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = "none";
+        document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML.replace(pieceToMove.id + ",", "");
+        pieceToMove.position += diceRoll;
+        if (pieceToMove.position > pieceToMove.path.length) //TODO check if its actually the length or if its shorter
+        {
+            pieceToMove.completed = true;
+        }
+
+        let divString = document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML;
+        //TODO ckecking if its a safe space, if it isnt then checking if theres an opponent piece and taking it (deleting it and setting its position to 0)
+        
+        //checking if the space the piece has moved to is a safe space
+        let isSafeSpace = false;
+        for (let i = 0; i < safeSpaces.length; i++) 
+        {
+            if (pieceToMove.path[pieceToMove.position] == safeSpaces[i])
+            {
+                isSafeSpace = true;
+                break;
+            }
+        }
+
+        //if its not a safe space then check if theres any enemy pieces to kill 
+        if (isSafeSpace == false)
+        {
+            //if there is enemy pieces, then kill the enemy pieces in the square
+            if (divString != "")
+            {
+                let splitDivString = divString.split(",");
+                let newSplitDivString = "";
+                for (let i = 0; i < splitDivString.length; i++) 
+                {
+                    //if there is a piece which isn't the same colour
+                    if (splitDivString[i][0] != pieceToMove.id[0])
+                    {
+                        //look through the pieces to find the matching id
+                        for (let j = 0; j < pieces.length; j++) 
+                        {
+                            if (pieces[j].id == splitDivString[i])
+                            {
+                                //reset the piece
+                                pieces[j].reset();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //if the id is of the same colour then we're keeping the piece
+                        newSplitDivString += splitDivString[i];
+                    }
+
+                }
+            }
+            //update the div string
+            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML = newSplitDivString + pieceToMove.id + ",";
+        }
+        else
+        {
+            //if it is a safe space then just add the piece to the square
+            document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = pieceToMove.image;
+            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML += pieceToMove.id + ",";
+        }
+        
+
+        
+    }
+}
+
 
 function playGame()
 {
