@@ -71,9 +71,11 @@ let dice2 = 0;
 
 //shows whether dice has been rolled this term
 let diceRolled = false;
+let diceQueue = [];
 
 //To determine who's turn it is
 let playerTurn = 1;
+let moveSuccessful = false;
 
 //shows whether the game is finised yet
 let gameFinished = false;
@@ -138,7 +140,13 @@ function rollDice()
     }
     //TODO add dice roll to the queue and set dicerolled to false whena double 6 is rolled, also tell the player to roll again
     diceRolled = true;
+    diceQueue.push(dice1);
+    diceQueue.push(dice2);
 
+    if (dice1 == 6 && dice2 == 6)
+    {
+        diceRolled = false;
+    }
     //document.getElementById("dice").innerHTML = dice1.toString();
     //document.getElementById("dice2").innerHTML = dice2.toString();
 }
@@ -198,10 +206,12 @@ function move(pieceToMove, diceRoll)
             pieceToMove.position = pieceToMove.position++;
             document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = pieceToMove.image;
             document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML += pieceToMove.id + ",";
+            moveSuccessful = true;
         }
         else
         {
             //TODO print "you need a 6 to take out this piece"
+            moveSuccessful = false;
         }
     }
     else
@@ -212,11 +222,11 @@ function move(pieceToMove, diceRoll)
         if (pieceToMove.position > pieceToMove.path.length) //TODO check if its actually the length or if its shorter
         {
             pieceToMove.completed = true;
+            moveSuccessful == true;
         }
 
         let divString = document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML;
-        //TODO ckecking if its a safe space, if it isnt then checking if theres an opponent piece and taking it (deleting it and setting its position to 0)
-        
+                
         //checking if the space the piece has moved to is a safe space
         let isSafeSpace = false;
         for (let i = 0; i < safeSpaces.length; i++) 
@@ -277,6 +287,7 @@ function move(pieceToMove, diceRoll)
 
 function playGame()
 {
+    initialisePieces()
     while (!gameFinished)
     {
         diceRolled = false;
@@ -284,10 +295,29 @@ function playGame()
         {
             //TODO status string = "roll the dice"
         }
-
         //TODO implemet a queue for the dice rolls, keep asking to move while the queue isnt empty
+        while (diceQueue.length != 0)
+        {
+            while (!moveSuccessful)
+            {
+                let currentDiceRoll = diceQueue.shift()
+                //pick a piece to move
+                if (playerTurn == 1)
+                {
+                    let oldDivIDs = []
+                    for (let i = 0; i < 4; i++) 
+                    {
+                        oldDivIDs += pieces[i].path[pieces[i].position];
+                        document.getElementById(pieces[i].path[pieces[i].position]).addEventListener("click", move(pieces[i],currentDiceRoll));
+                        
+                    }
+                    
+                }
+            }
+            
+        }
 
     }
 }
 
-window.onload = initialisePieces();
+window.onload = playGame();
