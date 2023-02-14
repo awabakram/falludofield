@@ -97,7 +97,7 @@ body{
     margin: 3.2vh;
     border: 1px solid white;
     position: relative;
-    background-size: contain;
+    background-size: cover;
 }
 
 .red .innerSpace{
@@ -121,7 +121,7 @@ body{
     width: 6.39vh;
     height: 6.39vh;
     border: 1px solid white;
-    background-size: contain;
+    background-size: cover;
 }
 
 .verticalSpaces{
