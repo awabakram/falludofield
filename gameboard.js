@@ -83,6 +83,38 @@ let gameFinished = false;
 //array of all of the safe spaces on the board
 let safeSpaces = ["2", "10", "15", "23", "28", "36", "41", "49"];
 
+function diceButtonPressed()
+{
+    rollDice()
+    let currentDiceRoll = diceQueue.shift();
+    if (playerTurn == 1)
+    {
+
+        // let oldDivIDs = [];
+        // for (let i = 0; i < 4; i++) 
+        // {
+        //     oldDivIDs += pieces[i].path[pieces[i].position];
+        //     
+            
+        // }
+        document.getElementById(pieces[0].path[pieces[0].position]).addEventListener('click', move(pieces[0],currentDiceRoll));
+        document.getElementById(pieces[1].path[pieces[1].position]).addEventListener('click', move(pieces[1],currentDiceRoll));
+        document.getElementById(pieces[2].path[pieces[2].position]).addEventListener('click', move(pieces[2],currentDiceRoll));
+        document.getElementById(pieces[3].path[pieces[3].position]).addEventListener('click', move(pieces[3],currentDiceRoll));        
+    }
+    // while (diceQueue.length != 0)
+    // {
+    //     while (!moveSuccessful)
+    //     {
+            
+    //         //pick a piece to move
+            
+    //     }
+        
+    // }
+
+}
+
 //function to retun a random number between two ints (inclusive)
 function randomInt(min, max)
 {
@@ -194,6 +226,71 @@ function initialisePieces()
     // redPiece4 = new piece("r3","red", "insideRed4");
 }
 
+function checkIfPlayerFinished(playerNumber)
+{
+    let finished = true;
+    if (playerNumber == 1)
+    {
+        for (let i = 0; i < 4; i++) {
+            if (pieces[i].completed == false)
+            {
+                finished = false;
+            }
+            
+        }
+    }
+    else if (playerNumber == 2)
+    {
+        for (let i = 4; i < 8; i++) {
+            if (pieces[i].completed == false)
+            {
+                finished = false;
+            }
+            
+        }
+    }
+    if (playerNumber == 3)
+    {
+        for (let i = 8; i < 12; i++) {
+            if (pieces[i].completed == false)
+            {
+                finished = false;
+            }
+            
+        }
+    }
+    if (playerNumber == 4)
+    {
+        for (let i = 12; i < 16; i++) {
+            if (pieces[i].completed == false)
+            {
+                finished = false;
+            }
+            
+        }
+    }
+
+    return finished;
+}
+
+function checkIfMovePossible(diceRoll)
+{
+    //when the players rolled a 6, you can always move a piece
+    if (diceRoll == 6)
+    {
+        return true;
+    }
+    let possible = false;
+    if (playerTurn == 1)
+    {
+        for (let i = 0; i < 4; i++) {
+            if (pieces[i].position != 0)
+            {
+                possible = true;
+            }      
+        }
+    }
+}
 function move(pieceToMove, diceRoll) 
 {
     //if its still inside you need a 6 to take it out
@@ -271,12 +368,14 @@ function move(pieceToMove, diceRoll)
             }
             //update the div string
             document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML = newSplitDivString + pieceToMove.id + ",";
+            moveSuccessful = true;
         }
         else
         {
             //if it is a safe space then just add the piece to the square
             document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = pieceToMove.image;
             document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML += pieceToMove.id + ",";
+            moveSuccessful = true;
         }
         
 
@@ -296,28 +395,9 @@ function playGame()
             //TODO status string = "roll the dice"
         }
         //TODO implemet a queue for the dice rolls, keep asking to move while the queue isnt empty
-        while (diceQueue.length != 0)
-        {
-            while (!moveSuccessful)
-            {
-                let currentDiceRoll = diceQueue.shift()
-                //pick a piece to move
-                if (playerTurn == 1)
-                {
-                    let oldDivIDs = []
-                    for (let i = 0; i < 4; i++) 
-                    {
-                        oldDivIDs += pieces[i].path[pieces[i].position];
-                        document.getElementById(pieces[i].path[pieces[i].position]).addEventListener("click", move(pieces[i],currentDiceRoll));
-                        
-                    }
-                    
-                }
-            }
-            
-        }
+        
 
     }
 }
 
-window.onload = playGame();
+window.onload = initialisePieces();
