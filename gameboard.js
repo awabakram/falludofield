@@ -20,7 +20,7 @@ class piece
                         "31","32","33","34","35","36","37","38","39","40",
                         "41","42","43","44","45","46","47","48","49","50",
                         "51","52","53","54","55","56","57","73"];
-            this.image = 'url("yellowPiece.jpg")';
+            this.image = 'url("./yellowPiece.jpg")';
         }
         if (colour == "green")
         {
@@ -30,7 +30,7 @@ class piece
                         "41","42","43","44","45","46","47","48","49","50",
                         "51","52","1","2","3","4","5","6","7","8","9","10",
                         "11","12","13","58","59","60","61","62","73"];
-            this.image = 'url("greenPiece.jpg")';
+            this.image = 'url("./greenPiece.jpg")';
         }
         if (colour == "blue")
         {
@@ -40,7 +40,7 @@ class piece
                         "17","18","19","20","21","22","23","24","25","26",
                         "27","28","29","30","31","32","33","34","35","36",
                         "37","38","39","68","69","70","71","72","73"];
-            this.image = 'url("bluePiece.jpg")';
+            this.image = 'url("./bluePiece.jpg")';
         }
         if (colour == "red")
         {
@@ -50,7 +50,7 @@ class piece
                         "2","3","4","5","6","7","8","9","10","11",
                         "12","13","14","15","16","17","18","19","20","21",
                         "22","23","24","25","26","63","64","65","66","67","73"];
-            this.image = 'url("redPiece.jpg")';
+            this.image = 'url("./redPiece.jpg")';
         }
         //draw the piece at the start position
         document.getElementById(startPosition).style.backgroundImage = this.image;
@@ -66,52 +66,71 @@ class piece
 }
 
 //varaibles to show the current value of the two dice
-let dice1 = 0;
-let dice2 = 0;
+var dice1 = 0;
+var dice2 = 0;
 
 //shows whether dice has been rolled this term
-let diceRolled = false;
-let diceQueue = [];
+var diceRolled = false;
+// var diceQueue = [];
 
 //To determine who's turn it is
-let playerTurn = 1;
-let moveSuccessful = false;
+var playerTurn = 1;
+var moveSuccessful = false;
 
 //shows whether the game is finised yet
-let gameFinished = false;
+var gameFinished = false;
 
 //array of all of the safe spaces on the board
-let safeSpaces = ["2", "10", "15", "23", "28", "36", "41", "49"];
+var safeSpaces = ["2", "10", "15", "23", "28", "36", "41", "49"];
 
-function diceButtonPressed()
+
+function dice1ButtonPressed()
 {
-    rollDice()
-    let currentDiceRoll = diceQueue.shift();
+    // if (playerTurn == 1)
+    // {
+    //     document.getElementById(pieces[0].path[pieces[0].position]).addEventListener('click', function(){move(pieces[0],dice1)});
+    //     document.getElementById(pieces[1].path[pieces[1].position]).addEventListener('click', function(){move(pieces[1],dice1)});
+    //     document.getElementById(pieces[2].path[pieces[2].position]).addEventListener('click', function(){move(pieces[2],dice1)});
+    //     document.getElementById(pieces[3].path[pieces[3].position]).addEventListener('click',function(){move(pieces[3],dice1)});        
+    // }
+    //if the dice roll has already been used
+    if (document.getElementById("dice").backgroundImage == 'url("./DiceX.jpeg")')
+    {
+        return;
+    }
+
     if (playerTurn == 1)
     {
-
-        // let oldDivIDs = [];
-        // for (let i = 0; i < 4; i++) 
-        // {
-        //     oldDivIDs += pieces[i].path[pieces[i].position];
-        //     
-            
-        // }
-        document.getElementById(pieces[0].path[pieces[0].position]).addEventListener('click', move(pieces[0],currentDiceRoll));
-        document.getElementById(pieces[1].path[pieces[1].position]).addEventListener('click', move(pieces[1],currentDiceRoll));
-        document.getElementById(pieces[2].path[pieces[2].position]).addEventListener('click', move(pieces[2],currentDiceRoll));
-        document.getElementById(pieces[3].path[pieces[3].position]).addEventListener('click', move(pieces[3],currentDiceRoll));        
+        for (let i = 0; i < 4; i++) 
+        {
+            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
+        }
     }
-    // while (diceQueue.length != 0)
-    // {
-    //     while (!moveSuccessful)
-    //     {
-            
-    //         //pick a piece to move
-            
-    //     }
-        
-    // }
+    else if (playerTurn == 2)
+    {
+        for (let i = 4; i < 8; i++) 
+        {
+            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
+        }
+    }
+    else if (playerTurn == 3)
+    {
+        for (let i = 8; i < 12; i++) 
+        {
+            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
+        }
+    }
+    else if (playerTurn == 4)
+    {
+        for (let i = 12; i < 16; i++) 
+        {
+            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
+        }
+    }
+
+    document.getElementById("instructions").innerHTML = "Select piece to use the dice roll " + dice1 + "on";
+    //dice1 = 0;
+    document.getElementById("dice").style.backgroundImage = 'url("./DiceX.jpeg")';
 
 }
 
@@ -129,58 +148,57 @@ function rollDice()
     switch (dice1)
     {
         case 1:
-            document.getElementById("dice").style.backgroundImage = 'url("/Dice1.jpeg")';
+            document.getElementById("dice").style.backgroundImage = 'url("./Dice1.jpeg")';
             break;
         case 2:
-            document.getElementById("dice").style.backgroundImage = 'url("/Dice2.jpeg")';
+            document.getElementById("dice").style.backgroundImage = 'url("./Dice2.jpeg")';
             break;
         case 3:
-            document.getElementById("dice").style.backgroundImage = 'url("/Dice3.jpeg")';
+            document.getElementById("dice").style.backgroundImage = 'url("./Dice3.jpeg")';
             break;
         case 4:
-            document.getElementById("dice").style.backgroundImage = 'url("/Dice4.jpeg")';
+            document.getElementById("dice").style.backgroundImage = 'url("./Dice4.jpeg")';
             break;
         case 5:
-            document.getElementById("dice").style.backgroundImage = 'url("/Dice5.jpeg")';
+            document.getElementById("dice").style.backgroundImage = 'url("./Dice5.jpeg")';
             break;
         case 6:
-            document.getElementById("dice").style.backgroundImage = 'url("/Dice6.jpeg")';
+            document.getElementById("dice").style.backgroundImage = 'url("./Dice6.jpeg")';
             break;
 
     }
     switch (dice2)
     {
         case 1:
-            document.getElementById("dice2").style.backgroundImage = 'url("/Dice1.jpeg")';
+            document.getElementById("dice2").style.backgroundImage = 'url("./Dice1.jpeg")';
             break;
         case 2:
-            document.getElementById("dice2").style.backgroundImage = 'url("/Dice2.jpeg")';
+            document.getElementById("dice2").style.backgroundImage = 'url("./Dice2.jpeg")';
             break;
         case 3:
-            document.getElementById("dice2").style.backgroundImage = 'url("/Dice3.jpeg")';
+            document.getElementById("dice2").style.backgroundImage = 'url("./Dice3.jpeg")';
             break;
         case 4:
-            document.getElementById("dice2").style.backgroundImage = 'url("/Dice4.jpeg")';
+            document.getElementById("dice2").style.backgroundImage = 'url("./Dice4.jpeg")';
             break;
         case 5:
-            document.getElementById("dice2").style.backgroundImage = 'url("/Dice5.jpeg")';
+            document.getElementById("dice2").style.backgroundImage = 'url("./Dice5.jpeg")';
             break;
         case 6:
-            document.getElementById("dice2").style.backgroundImage = 'url("/Dice6.jpeg")';
+            document.getElementById("dice2").style.backgroundImage = 'url("./Dice6.jpeg")';
             break;
 
     }
     //TODO add dice roll to the queue and set dicerolled to false whena double 6 is rolled, also tell the player to roll again
-    diceRolled = true;
-    diceQueue.push(dice1);
-    diceQueue.push(dice2);
+    // diceRolled = true;
+    // diceQueue.push(dice1);
+    // diceQueue.push(dice2);
 
-    if (dice1 == 6 && dice2 == 6)
-    {
-        diceRolled = false;
-    }
-    //document.getElementById("dice").innerHTML = dice1.toString();
-    //document.getElementById("dice2").innerHTML = dice2.toString();
+    // if (dice1 == 6 && dice2 == 6)
+    // {
+    //     diceRolled = false;
+    // }
+    
 }
 
 //function to initialise all of the pieces
@@ -300,14 +318,14 @@ function move(pieceToMove, diceRoll)
         {
             document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = "none";
             document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML.replace(pieceToMove.colour[0], "");
-            pieceToMove.position = pieceToMove.position++;
+            pieceToMove.position = pieceToMove.position += 1;
             document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = pieceToMove.image;
             document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML += pieceToMove.id + ",";
             moveSuccessful = true;
         }
         else
         {
-            //TODO print "you need a 6 to take out this piece"
+            document.getElementById("instructions").innerHTML = "You need a 6 to take out this piece";
             moveSuccessful = false;
         }
     }

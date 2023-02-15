@@ -9,13 +9,13 @@ body{
     background-color: rebeccapurple;
 }
 
-.instructions{
+#instructions{
     background-color: white;
     border: 3px solid black;
 
 }
 
-.turn{
+#turn{
     background-color: white;
     border: 3px solid black;
 }

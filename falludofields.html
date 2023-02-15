@@ -16,13 +16,13 @@
         </div>
     
         <div>
-            <p class="turn">
+            <p id="turn">
                 It is players 1s turn
             </p>
         </div>
 
         <div>
-            <p class="instructions">
+            <p id="instructions">
                 Please click the roll dice button
             </p>
         </div>
@@ -197,11 +197,11 @@
 
         <div class="rollMechanism">
             <div class="bothDice">
-                <div id = "dice"></div>
+                <div id = "dice" onclick="dice1ButtonPressed()"></div>
                 <div id = "dice2"></div>  
             </div>
             <div>
-                <button type="button" class= "rollDiceButton" onclick="diceButtonPressed()">Roll Dice</button>
+                <button type="button" class= "rollDiceButton" onclick="rollDice()">Roll Dice</button>
             </div>
         </div>
     </div>
