@@ -35,7 +35,7 @@
             </div>
 
             <div>
-                <input id="login" type="submit" value="Login" onclick="return RegisterUser()">
+                <input id="signup" type="submit" value="Sign Up" onclick="return RegisterUser()">
             </div>
           
         </form>
