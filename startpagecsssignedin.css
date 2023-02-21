@@ -21,9 +21,18 @@ section{
 .textcenter{
     text-align:  center;
 }
+.playbutton:hover{
+    background-color: #E0B0FF;
+}
+.signoutbutton:hover{
+    background-color: #E0B0FF;
+}
+.leaderboardbutton:hover{
+    background-color: #FFFFE0;
+}
 .playbutton{
-    width: 120px;
-    height:50px;
+    width:160px;
+    height:60px;
     background-color: #A020F0;
     text-align: center;
     font-size: 22px;
@@ -33,12 +42,6 @@ section{
     cursor: pointer;
     transition: all 300ms ease;
 }
-.playbutton:hover{
-    background-color: #E0B0FF;
-}
-.signoutbutton:hover{
-    background-color: #E0B0FF;
-}
 .signoutbutton{
     width:80px;
     height:30px;
@@ -47,7 +50,8 @@ section{
     font-size:15px;
     font-family: "Helvetica";
     border-radius: 5px;
-    margin-top:5px;
+    margin-top:2px;
+    margin-left:2px;
     cursor: pointer;
     transition: all 300ms ease;
 }
@@ -61,6 +65,7 @@ section{
     border-radius: 5px;
     margin: 191px auto;
     cursor: pointer;
+    transition: all 300ms ease;
 }
 .rectangle {
     width: 450px;
