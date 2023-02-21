@@ -9,6 +9,36 @@ body{
     background-color: rebeccapurple;
 }
 
+#dialog-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 150px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #ccc;
+    padding: 20px;
+  }
+  
+/* Style the OK button */
+#ok-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Style the button when hovered over */
+#ok-button:hover {
+  background-color: #3e8e41;
+}
+
 #instructions{
     background-color: white;
     border: 3px solid black;
@@ -26,114 +56,6 @@ body{
 
 .rightSide{
     display: grid;
-}
-
-/*Adding the black base of the gamboard*/
-.gameboard{
-    background-color: rgba(0, 0, 0, 0.932);
-    width: 100vh;
-    height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    border: 1px solid white;
-    margin: 1vh;
-}
-
-
-/*Adding colour coordinated corners to the board*/
-.red{
-    width: 40vh;
-    height: 40vh;
-    background-color: rgba(255, 0, 0, 0.935);
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    }
-
-.blue{
-    width: 40vh;
-    height: 40vh;
-    background-color:royalblue;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-.green{
-    width: 40vh;
-    height: 40vh;
-    background-color: rgba(0, 128, 0, 0.962);
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
-.yellow{
-    width: 40vh;
-    height: 40vh;
-    background-color: rgba(255, 255, 0, 0.935);
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
-/*The inside of the corners*/
-.inside{
-    width: 26vh;
-    height: 26vh;
-    background-color: rgba(0, 0, 0, 0.932);
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid white;
-}
-
-/*Where the pieces initially stand*/
-.innerSpace{
-    width: 6vh;
-    height: 6vh;
-    margin: 3.2vh;
-    border: 1px solid white;
-    position: relative;
-    background-size: cover;
-}
-
-.red .innerSpace{
-    background-color: rgba(255, 0, 0, 0.935);
-}
-
-.blue .innerSpace{
-    background-color: royalblue;
-}
-
-.green .innerSpace{
-    background-color:rgba(0, 128, 0, 0.962) ;
-}
-
-.yellow .innerSpace{
-    background-color:rgba(255, 255, 0, 0.935) ;
-}
-
-/*Actual Game Spaces*/
-.spaces{
-    width: 6.39vh;
-    height: 6.39vh;
-    border: 1px solid white;
-    background-size: cover;
-}
-
-.verticalSpaces{
-    display: flex;
-}
-
-
-.horizontalSpaces{
-    width: 100vh;
-    height: 20vh;
-    justify-content: space-between;
-    display: flex;
 }
 
 .topRow{

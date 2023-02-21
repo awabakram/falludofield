@@ -1,17 +1,17 @@
 class piece 
 {
-    constructor(id, colour, startPosition)
+    constructor()
     {
         //each piece has a unique id identifier
-        this.id = id
+        //this.id = id
         //colour indicates what colour the piece is
-        this.colour = colour;
+        //this.colour = colour;
         //position is used to indicate how far along the path the piece is, used as an index for the path
         this.position = 0;
         //completed is used to indicate whether the piece has reached the end yet
-        this.completed = false;
+        //this.completed = false;
 
-        if (colour == "yellow")
+        /*if (colour == "yellow")
         {
             //path shows what squares the piece can move along on its journey to the end
             this.path = [startPosition,"2","3","4","5","6","7","8","9","10",
@@ -51,30 +51,42 @@ class piece
                         "12","13","14","15","16","17","18","19","20","21",
                         "22","23","24","25","26","63","64","65","66","67","73"];
             this.image = 'url("./redPiece.jpg")';
-        }
+        }*/
         //draw the piece at the start position
-        document.getElementById(startPosition).style.backgroundImage = this.image;
+        //document.getElementById(startPosition).style.backgroundImage = this.image;
     }
 
     //method to delete the piece and reset its position back to its start position
     reset()
     {
-        document.getElementById(this.path[this.position]).backgroundImage = "none";
-        this.position = 0;
-        document.getElementById(this.path[this.position]).backgroundImage = this.image;
+        //document.getElementById(this.path[this.position]).backgroundImage = "none";
+        //this.position = 0;
+        //document.getElementById(this.path[this.position]).backgroundImage = this.image;
     }
 }
+
+const paths = [
+    // Red
+    [[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],
+    [6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],
+    [8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8]
+    [12,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],
+    [9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],
+    [6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[1,7],[2,7],[3,7],[4,7],[5,7],[-1,-1]]
+];
+
+console.log(paths[0].length);
 
 //varaibles to show the current value of the two dice
 var dice1 = 0;
 var dice2 = 0;
 
-//shows whether dice has been rolled this term
+//shows whether dice has been rolled this turn
 var diceRolled = false;
 // var diceQueue = [];
 
 //To determine who's turn it is
-var playerTurn = 1;
+var playerTurn = 0;
 var moveSuccessful = false;
 
 //shows whether the game is finised yet
@@ -82,6 +94,8 @@ var gameFinished = false;
 
 //array of all of the safe spaces on the board
 var safeSpaces = ["2", "10", "15", "23", "28", "36", "41", "49"];
+
+var pieces = [];
 
 
 function dice1ButtonPressed()
@@ -189,8 +203,13 @@ function rollDice()
             break;
 
     }
+
+    console.log("dice rolled");
+    if (dice1 || dice2 == 6) {
+
+    }
     //TODO add dice roll to the queue and set dicerolled to false whena double 6 is rolled, also tell the player to roll again
-    // diceRolled = true;
+    diceRolled = true;
     // diceQueue.push(dice1);
     // diceQueue.push(dice2);
 
@@ -204,7 +223,7 @@ function rollDice()
 //function to initialise all of the pieces
 function initialisePieces()
 {
-    pieces = [new piece("y0","yellow", "insideYellow1"), 
+    /*pieces = [new piece("y0","yellow", "insideYellow1"), 
     new piece("y1","yellow", "insideYellow2"),
     new piece("y2","yellow", "insideYellow3"),
     new piece("y3","yellow", "insideYellow4"),
@@ -219,7 +238,7 @@ function initialisePieces()
     new piece("r0","red", "insideRed1"),
     new piece("r1","red", "insideRed2"),
     new piece("r2","red", "insideRed3"),
-    new piece("r3","red", "insideRed4")]
+    new piece("r3","red", "insideRed4")]*/
 
     // yellowPiece1 = new piece("y0","yellow", "insideYellow1");
     // yellowPiece2 = new piece("y1","yellow", "insideYellow2");
@@ -418,4 +437,468 @@ function playGame()
     }
 }
 
-window.onload = initialisePieces();
+function drawStar(cx, cy, spikes, outerRadius, innerRadius, ctx){
+    var rot=Math.PI/2*3;
+    var x=cx;
+    var y=cy;
+    var step=Math.PI/spikes;
+
+    ctx.beginPath();
+    ctx.moveTo(cx,cy-outerRadius)
+    for(i=0;i<spikes;i++){
+        x=cx+Math.cos(rot)*outerRadius;
+        y=cy+Math.sin(rot)*outerRadius;
+        ctx.lineTo(x,y)
+        rot+=step
+
+        x = cx+ Math.cos(rot)*innerRadius;
+        y = cy+Math.sin(rot)*innerRadius;
+        ctx.lineTo(x,y)
+        rot += step
+    }
+    ctx.lineTo(cx,cy-outerRadius);
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+function drawSquare(x, y, $canvas) {
+    var style = "#FFFFFF";
+    if ((y > 0 && x == 7 && y < 6) || x == 8 && y == 1) 
+        style = "#32CD32";
+    else if ((x > 0 && y == 7 && x < 6) || x == 1 && y == 6) 
+        style = "#EE2E31";
+    else if ((y < 14 && x == 7 && y > 8) || x == 6 && y == 13) 
+        style = "#00bfff";
+    else if ((x > 8 && y == 7 && x < 14) || x == 13 && y == 8) 
+        style = "#fada5e";
+    
+    $canvas.drawRect({
+        fillStyle: style,
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: x*100, y: y*100,
+        width: 100,
+        height: 100,
+    });
+}
+
+function callbackPieceClicked(layer, pieceI, $canvas) {
+    var turn = Number(pieceI[0]);
+    var np = Number(pieceI[1]);
+    if (turn != playerTurn) 
+        return;
+
+    console.log("red piece clicked");
+
+    if (diceRolled) {
+        if (pieces[np].position == 0)
+            if (dice1 == 6 || dice2 == 6) {
+                pieces[np].position == 1;
+                console.log(" this is wokrign");
+                $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[0], {
+                    x: 200-50, y: 650
+                });
+                $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[1], {
+                    x: 200-50, y: 650-100
+                });
+            }
+            else  
+                return;
+    }
+    
+}
+
+function drawCircle(x, y, radius, ctx) {
+    ctx.beginPath()
+    ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+    ctx.fill()
+    ctx.stroke()
+}
+
+function drawPiece(x, y, colour, pieceI, $canvas) {
+    $canvas.drawPath({
+        groups: ['pieces'+pieceI],
+        bringToFront: false,
+        fillStyle: colour,
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: x, y: y,
+        p1: {
+            type: 'arc',
+            x: 0, y: 0,
+            start: 88, end: 272,
+            radius: 40
+        },
+        p2: {
+            type: 'line',
+            x1: -40, y1: 0,
+            x2: -10, y2: -100,
+            x3: 10, y3: -100,
+            x4: 40, y4: 0
+        },
+        click: function(layer) {
+            callbackPieceClicked(layer, pieceI, $canvas);
+        }
+    }).drawArc({
+        layer: true,
+        groups: ['pieces'+pieceI],
+        fromCenter: true,
+        fillStyle: colour,
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: x, y: y-100,
+        radius: 30,
+        click: function(layer) {
+            callbackPieceClicked(layer, pieceI, $canvas);
+        }
+    });
+    
+    /*ctx.beginPath()
+    ctx.arc(x, y, 40, 0, Math.PI, false)
+    ctx.fill();
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(x-40, y+1);
+    ctx.lineTo(x-10, y-100);
+    ctx.lineTo(x+10, y-100);
+    ctx.lineTo(x+40, y);
+    ctx.fill();
+    ctx.stroke()
+    ctx.beginPath();
+    ctx.arc(x, y-100, 30, 0, 2 * Math.PI, false)
+    ctx.fill();
+    ctx.stroke()*/
+}
+
+function initCanvas() {
+    $.jCanvas.defaults.fromCenter = false;
+    $.jCanvas.defaults.layer = true;
+    var $canvas = $('canvas');
+    
+    $canvas.drawRect({
+        fillStyle: "#EE2E31",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 0, y: 0,
+        width: 600,
+        height: 600,
+    });
+
+    $canvas.drawRect({
+        fillStyle: "#32CD32",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 900, y: 0,
+        width: 600,
+        height: 600,
+    });
+
+    $canvas.drawRect({
+        fillStyle: "#00bfff",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 0, y: 900,
+        width: 600,
+        height: 600,
+    });
+
+    $canvas.drawRect({
+        fillStyle: "#fada5e",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 900, y: 900,
+        width: 600,
+        height: 600,
+    });
+
+    $canvas.drawRect({
+        fillStyle: "#FFFFFF",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 100, y: 100,
+        width: 400,
+        height: 400,
+    });
+
+    $canvas.drawRect({
+        fillStyle: "#FFFFFF",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 1000, y: 100,
+        width: 400,
+        height: 400,
+    });
+
+    $canvas.drawRect({
+        fillStyle: "#FFFFFF",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 100, y: 1000,
+        width: 400,
+        height: 400,
+    });
+
+    $canvas.drawRect({
+        fillStyle: "#FFFFFF",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 1000, y: 1000,
+        width: 400,
+        height: 400,
+    });
+
+    $canvas.drawPath({
+        fillStyle: "#32CD32",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 0, y: 0,
+        width: 600,
+        height: 600,
+        p1: {
+            type: 'line',
+            x1: 600, y1: 600,
+            x2: 900, y2: 600,
+            x3: 750, y3: 750,
+            x4: 600, y4: 600
+        }
+    });
+
+    $canvas.drawPath({
+        fillStyle: "#00bfff",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 0, y: 0,
+        width: 600,
+        height: 600,
+        p1: {
+            type: 'line',
+            x1: 600, y1: 900,
+            x2: 900, y2: 900,
+            x3: 750, y3: 750,
+            x4: 600, y4: 900
+        }
+    });
+
+    $canvas.drawPath({
+        fillStyle: "#EE2E31",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 0, y: 0,
+        width: 600,
+        height: 600,
+        p1: {
+            type: 'line',
+            x1: 600, y1: 600,
+            x2: 600, y2: 900,
+            x3: 750, y3: 750,
+            x4: 600, y4: 600
+        }
+    });
+
+    $canvas.drawPath({
+        fillStyle: "#fada5e",
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: 0, y: 0,
+        width: 600,
+        height: 600,
+        p1: {
+            type: 'line',
+            x1: 900, y1: 600,
+            x2: 900, y2: 900,
+            x3: 750, y3: 750,
+            x4: 900, y4: 600
+        }
+    });
+
+    $canvas.drawArc({
+        fillStyle: "#EE2E31",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 200, y: 200
+    }).drawArc({
+        fillStyle: "#EE2E31",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 400, y: 200
+    }).drawArc({
+        fillStyle: "#EE2E31",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 200, y: 400
+    }).drawArc({
+        fillStyle: "#EE2E31",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 400, y: 400
+    });
+
+    $canvas.drawArc({
+        fillStyle: "#32CD32",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1100, y: 200
+    }).drawArc({
+        fillStyle: "#32CD32",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1300, y: 200
+    }).drawArc({
+        fillStyle: "#32CD32",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1100, y: 400
+    }).drawArc({
+        fillStyle: "#32CD32",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1300, y: 400
+    });
+
+    $canvas.drawArc({
+        fillStyle: "#00bfff",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 200, y: 1100
+    }).drawArc({
+        fillStyle: "#00bfff",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 400, y: 1100
+    }).drawArc({
+        fillStyle: "#00bfff",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 200, y: 1300
+    }).drawArc({
+        fillStyle: "#00bfff",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 400, y: 1300
+    });
+
+    $canvas.drawArc({
+        fillStyle: "#fada5e",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1100, y: 1300
+    }).drawArc({
+        fillStyle: "#fada5e",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1100, y: 1100
+    }).drawArc({
+        fillStyle: "#fada5e",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1300, y: 1100
+    }).drawArc({
+        fillStyle: "#fada5e",
+        strokeStyle: "#000000",
+        fromCenter: true,
+        strokeWidth: 5,
+        radius: 50,
+        x: 1300, y: 1300
+    });
+
+    for (var i = 6; i < 9; i++) 
+        for (var j = 0; j < 6; j++)
+            drawSquare(i, j, $canvas);
+
+    for (var i = 0; i < 6; i++) 
+        for (var j = 6; j < 9; j++)
+            drawSquare(i, j, $canvas);
+
+    for (var i = 9; i < 15; i++) 
+        for (var j = 6; j < 9; j++)
+            drawSquare(i, j, $canvas);
+
+    for (var i = 6; i < 9; i++) 
+        for (var j = 9; j < 15; j++)
+            drawSquare(i, j, $canvas);
+
+    drawPiece(200, 200, "#EE2E31", "00", $canvas);
+    drawPiece(400, 200, "#EE2E31", "01", $canvas);
+    drawPiece(200, 400, "#EE2E31", "02", $canvas);
+    drawPiece(400, 400, "#EE2E31", "03", $canvas);
+    /*ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(100, 100, 400, 400);
+    ctx.strokeRect(100, 100, 400, 400);
+    ctx.fillRect(1000, 100, 400, 400);
+    ctx.strokeRect(1000, 100, 400, 400);
+    ctx.fillRect(100, 1000, 400, 400);
+    ctx.strokeRect(100, 1000, 400, 400);
+    ctx.fillRect(1000, 1000, 400, 400);
+    ctx.strokeRect(1000, 1000, 400, 400);
+    
+    ctx.fillStyle = "#EE2E31";
+    drawCircle(200, 200, 50, ctx);
+    drawCircle(400, 200, 50, ctx);
+    drawCircle(200, 400, 50, ctx);
+    drawCircle(400, 400, 50, ctx);
+
+    ctx.fillStyle = "#32CD32";
+    drawCircle(1100, 200, 50, ctx);
+    drawCircle(1300, 200, 50, ctx);
+    drawCircle(1100, 400, 50, ctx);
+    drawCircle(1300, 400, 50, ctx);
+
+    ctx.fillStyle = "#00bfff";
+    drawCircle(200, 1100, 50, ctx);
+    drawCircle(400, 1100, 50, ctx);
+    drawCircle(200, 1300, 50, ctx);
+    drawCircle(400, 1300, 50, ctx);
+
+    ctx.fillStyle = "#fada5e";
+    drawCircle(1100, 1100, 50, ctx);
+    drawCircle(1300, 1100, 50, ctx);
+    drawCircle(1100, 1300, 50, ctx);
+    drawCircle(1300, 1300, 50, ctx);
+
+    drawStar(250, 855, 5, 40, 20, ctx);
+    drawStar(650, 255, 5, 40, 20, ctx);
+    drawStar(1250, 655, 5, 40, 20, ctx);
+    drawStar(850, 1250, 5, 40, 20, ctx);
+
+    ctx.fillStyle = "#EE2E31";
+    drawPiece(200, 200, ctx);
+    drawPiece(400, 200, ctx);
+    drawPiece(200, 400, ctx);
+    drawPiece(400, 400, ctx);*/
+    
+    // TEMP
+
+    pieces = [new piece(), new piece(), new piece(), new piece()]
+}
+
+window.onload = initCanvas();//initialisePieces();  

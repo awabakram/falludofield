@@ -10,6 +10,13 @@
 
 
 <body>
+    <!--<dialog open id="dialog-box">
+        <p>Greetings, one and all!</p>
+        <form method="dialog">
+          <button id="ok-button">OK</button>
+        </form>
+    </dialog>-->
+    
     <div class="leftSide">
         <div class = "leftButton">
             <button type= "button" class = "logOutButton"> Logout</button> 
@@ -28,167 +35,7 @@
         </div>
     </div>
 
-
-    <div class = "gameboard">
-<!--Colour boxes-->
-        <!--Yellow Box-->
-        <div class = "yellow">
-            <div class = "inside">
-                <div class = "innerSpace" id="insideYellow1"></div>
-                <div class = "innerSpace" id="insideYellow2"></div>
-                <div class = "innerSpace" id="insideYellow3"></div>
-                <div class = "innerSpace" id="insideYellow4"></div>
-            </div>
-        </div>
-
-        <!--Top Moving spaces-->
-        <div class = "verticalSpaces">
-            <div class = "leftSpaces">
-                <div class = "spaces" id="12"></div>
-                <div class = "spaces" id="11"></div>
-                <div class = "spaces green" id="10"></div>
-                <div class = "spaces" id="9"></div>
-                <div class = "spaces" id="8"></div>
-                <div class = "spaces" id="7"></div>
-            </div>
-            <div class = "middleSpaces">
-                <div class = "spaces" id="13"></div>
-                <div class = "spaces green" id="58"></div>
-                <div class = "spaces green" id="59"></div>
-                <div class = "spaces green" id="60"></div>
-                <div class = "spaces green" id="61"></div>
-                <div class = "spaces green" id="62"></div>
-            </div>
-            <div class = "rightSpaces">
-                <div class = "spaces" id="14"></div>
-                <div class = "spaces green" id="15"></div>
-                <div class = "spaces" id="16"></div>
-                <div class = "spaces" id="17"></div>
-                <div class = "spaces" id="18"></div>
-                <div class = "spaces" id="19"></div>
-            </div>
-        </div>
-
-        <!--Green Box-->
-        <div class = "green">
-            <div class = "inside">
-                <div class = "innerSpace" id="insideGreen1"></div>
-                <div class = "innerSpace" id="insideGreen2"></div>
-                <div class = "innerSpace" id="insideGreen3"></div>
-                <div class = "innerSpace" id="insideGreen4"></div>
-            </div>
-        </div>
-
-        <div class = "horizontalSpaces">
-            <div class = "leftRows">
-                    <div class = "topRow">
-                        <div class = "spaces" id="1"></div>
-                        <div class = "spaces yellow" id="2"></div>
-                        <div class = "spaces" id="3"></div>
-                        <div class = "spaces" id="4"></div>
-                        <div class = "spaces" id="5"></div>
-                        <div class = "spaces" id="6"></div>
-                    </div>
-                    <div class = "topRow">
-                        <div class = "spaces" id="52"></div>
-                        <div class = "spaces yellow" id="53"></div>
-                        <div class = "spaces yellow" id="54"></div>
-                        <div class = "spaces yellow" id="55"></div>
-                        <div class = "spaces yellow" id="56"></div>
-                        <div class = "spaces yellow" id="57"></div>
-                    </div>
-                    <div class = "topRow">
-                        <div class = "spaces" id="51"></div>
-                        <div class = "spaces" id="50"></div>
-                        <div class = "spaces yellow" id="49"></div>
-                        <div class = "spaces" id="48"></div>
-                        <div class = "spaces" id="47"></div>
-                        <div class = "spaces" id="46"></div>
-                    </div>
-                </div>
-
-            <div class = "rightRows">
-                    <div class = "topRow">
-                        <div class = "spaces" id="20"></div>
-                        <div class = "spaces" id="21"></div>
-                        <div class = "spaces" id="22"></div>
-                        <div class = "spaces red" id="23"></div>
-                        <div class = "spaces" id="24"></div>
-                        <div class = "spaces" id="25"></div>
-                        </div>
-                    <div class = "topRow">
-                        <div class = "spaces red" id="67"></div>
-                        <div class = "spaces red" id="66"></div>
-                        <div class = "spaces red" id="65"></div>
-                        <div class = "spaces red" id="64"></div>
-                        <div class = "spaces red" id="63"></div>
-                        <div class = "spaces" id="26"></div>
-                        </div>
-                    <div class = "topRow">
-                        <div class = "spaces" id="32"></div>
-                        <div class = "spaces" id="31"></div>
-                        <div class = "spaces" id="30"></div>
-                        <div class = "spaces" id="29"></div>
-                        <div class = "spaces red" id="28"></div>
-                        <div class = "spaces" id="27"></div>
-                    </div>
-            </div>
-
-        </div>
-
-        <!--Blue Box-->
-        <div class = "blue">
-            <div class = "inside">
-                <div class = "innerSpace" id="insideBlue1"></div>
-                <div class = "innerSpace" id="insideBlue2"></div>
-                <div class = "innerSpace" id="insideBlue3"></div>
-                <div class = "innerSpace" id="insideBlue4"></div>
-            </div>
-        </div>
-
-        <!--Bottom Moving Spaces-->
-        <div class = "verticalSpaces">
-            <div class = "leftSpaces">
-                <div class = "spaces" id="45"></div>
-                <div class = "spaces" id="44"></div>
-                <div class = "spaces" id="43"></div>
-                <div class = "spaces" id="42"></div>
-                <div class = "spaces blue" id="41"></div>
-                <div class = "spaces" id="40"></div>
-            </div>
-            <div class = "middleSpaces">
-                <div class = "spaces blue" id="72"></div>
-                <div class = "spaces blue" id="71"></div>
-                <div class = "spaces blue" id="70"></div>
-                <div class = "spaces blue" id="69"></div>
-                <div class = "spaces blue" id="68"></div>
-                <div class = "spaces" id="39"></div>
-            </div>
-            <div class = "rightSpaces">
-                <div class = "spaces" id="33"></div>
-                <div class = "spaces" id="34"></div>
-                <div class = "spaces" id="35"></div>
-                <div class = "spaces blue" id="36"></div>
-                <div class = "spaces" id="37"></div>
-                <div class = "spaces" id="38"></div>
-            </div>
-        </div>
-
-        <!--Red Box-->
-        <div class = "red">
-            <div class = "inside">
-                <div class = "innerSpace" id="insideRed1"></div>
-                <div class = "innerSpace" id="insideRed2"></div>
-                <div class = "innerSpace" id="insideRed3"></div>
-                <div class = "innerSpace" id="insideRed4"></div>
-            </div>
-        </div>
-
-    
-
-
-    </div> 
-    
+    <canvas id="canvas" width="1500" height="1500" style="border:1px solid #000000;"></canvas>
 
     <div class="rightSide">
         <div>
@@ -207,13 +54,11 @@
     </div>
 
 
+    <script src="jquery-3.6.3.min.js"></script>
+    <script src="jcanvas.min.js"></script>
     <script src="gameboard.js"></script>
 
 
 </body>
-
-
-
-
 
 </html> 
