@@ -7,20 +7,8 @@
     flex-direction: row;
 }
 body{
-    background-image: url(pictures/da-map.png);   
+    background-image: url(pictures/ludobackground.jpg);   
     overflow: hidden; 
-}
-.yellowpiece,.redpiece{
-    height:100px;
-    width:100px;
-}
-.yellowpiece{
-    margin-right: 40px;
-    transform: rotate(-30deg);
-}
-.redpiece{
-    margin-left: 40px;
-    transform: rotate(30deg);
 }
 section{
     display: flex;
