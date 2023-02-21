@@ -67,12 +67,15 @@ class piece
 
 const paths = [
     // Red
-    [[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],
-    [6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],
-    [8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8]
-    [12,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],
-    [9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],[6,1],
-    [6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[1,7],[2,7],[3,7],[4,7],[5,7],[-1,-1]]
+    [[-1,-1],[1,6],[2,6],[3,6],[4,6],[5,6],
+    [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],
+    [7,0],[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],
+    [9,6],[10,6],[11,6],[12,6],[13,6],[14,6],
+    [14,7],[14,8],[13,8],[12,8],[11,8],[10,8],[9,8],
+    [8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],
+    [6,14],[6,13],[6,12],[6,11],[6,10],[6,9],[5,8],
+    [4,8],[3,8],[2,8],[1,8],[0,8],[0,7],[1,7],[2,7],
+    [3,7],[4,7],[5,7],[-1,-1]]
 ];
 
 console.log(paths[0].length);
@@ -217,7 +220,18 @@ function rollDice()
     // {
     //     diceRolled = false;
     // }
-    
+
+    /*random_timer = randomInt(10, 20);
+    for (var i = 0; i < random_timer; i++) {
+        setTimeout(() => { 
+            dice1 = randomInt(1,6);
+            console.log("fuck"); 
+        $('#die-1').attr("src", "./dice-" +  dice1.toString() + ".svg") 
+        $('#die-1').addClass("dice-shake");
+        if (i == random_timer) $('#die-1'.removeClass("diceShake"));
+        }, 50 + i*50); // Queue these to make a cute animation
+    }*/
+   
 }
 
 //function to initialise all of the pieces
@@ -491,21 +505,34 @@ function callbackPieceClicked(layer, pieceI, $canvas) {
     console.log("red piece clicked");
 
     if (diceRolled) {
-        if (pieces[np].position == 0)
-            if (dice1 == 6 || dice2 == 6) {
-                pieces[np].position == 1;
-                console.log(" this is wokrign");
-                $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[0], {
-                    x: 200-50, y: 650
-                });
-                $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[1], {
-                    x: 200-50, y: 650-100
-                });
-            }
-            else  
-                return;
+        var mov = pieces[np].position + dice1; // Temp, make it which dice is picked
+        if (pieces[np].position == 0) {
+            if (dice1 != 6 && dice2 != 6)
+                return; // We can't move this piece out of the home area without a 6
+            else 
+                mov = 1;
+        }
+        animatePieceMoving(layer, pieceI, turn, np, mov, $canvas);
     }
-    
+}
+
+function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
+    if (pieces[np].position < mov)
+        pieces[np].position += 1
+    else return;
+    var xx = paths[turn][pieces[np].position][0] * 100;
+    var yy = paths[turn][pieces[np].position][1] * 100;
+    $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[0], {
+        x: xx+50, y: yy+50
+    }, {
+        duration: 200,
+        complete: function(layer) {
+            animatePieceMoving(layer, pieceI, turn, np, mov, $canvas); // Recurse until we move the piece the desired number of places
+        }
+    });
+    $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[1], {
+        x: xx+50, y: yy-50
+    }, 200);
 }
 
 function drawCircle(x, y, radius, ctx) {

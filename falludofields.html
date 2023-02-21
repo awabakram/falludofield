@@ -10,14 +10,7 @@
 
 
 <body>
-    <!--<dialog open id="dialog-box">
-        <p>Greetings, one and all!</p>
-        <form method="dialog">
-          <button id="ok-button">OK</button>
-        </form>
-    </dialog>-->
-    
-    <div class="leftSide">
+    <div class="topRow">
         <div class = "leftButton">
             <button type= "button" class = "logOutButton"> Logout</button> 
         </div>
@@ -35,7 +28,22 @@
         </div>
     </div>
 
-    <canvas id="canvas" width="1500" height="1500" style="border:1px solid #000000;"></canvas>
+
+    <div class="board">
+        <canvas id="canvas" width="1500" height="1500" style="border:1px solid #000000;"></canvas>
+    </div>
+
+    <!--<div id="page-mask"></div>-->
+
+    <!--<dialog open id="dialog-box">
+        <h3>It's your turn!</h3>
+        <p>Please roll the dice:</p>
+        <div class="dice-wrapper">
+            <img class="dice" src="dice-1.svg" id="die-1">
+            <img class="dice" src="dice-2.svg" id="die-2">
+        </div>
+        <button id="roll-button" onclick="rollDice()">Roll </button>
+    </dialog>-->
 
     <div class="rightSide">
         <div>

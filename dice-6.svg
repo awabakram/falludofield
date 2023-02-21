@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 30 30" version="1.1">
+<g id="surface1">
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 108 120 L 20 120 C 13.4 120 8 114.6 8 108 L 8 20 C 8 13.4 13.4 8 20 8 L 108 8 C 114.6 8 120 13.4 120 20 L 120 108 C 120 114.6 114.6 120 108 120 Z M 108 120 " transform="matrix(0.234375,0,0,0.234375,0,0)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 11.25 7.5 C 11.25 9.570312 9.570312 11.25 7.5 11.25 C 5.429688 11.25 3.75 9.570312 3.75 7.5 C 3.75 5.429688 5.429688 3.75 7.5 3.75 C 9.570312 3.75 11.25 5.429688 11.25 7.5 Z M 11.25 7.5 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 26.25 22.5 C 26.25 24.570312 24.570312 26.25 22.5 26.25 C 20.429688 26.25 18.75 24.570312 18.75 22.5 C 18.75 20.429688 20.429688 18.75 22.5 18.75 C 24.570312 18.75 26.25 20.429688 26.25 22.5 Z M 26.25 22.5 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 11.25 22.5 C 11.25 24.570312 9.570312 26.25 7.5 26.25 C 5.429688 26.25 3.75 24.570312 3.75 22.5 C 3.75 20.429688 5.429688 18.75 7.5 18.75 C 9.570312 18.75 11.25 20.429688 11.25 22.5 Z M 11.25 22.5 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 26.25 7.5 C 26.25 9.570312 24.570312 11.25 22.5 11.25 C 20.429688 11.25 18.75 9.570312 18.75 7.5 C 18.75 5.429688 20.429688 3.75 22.5 3.75 C 24.570312 3.75 26.25 5.429688 26.25 7.5 Z M 26.25 7.5 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 11.25 15 C 11.25 17.070312 9.570312 18.75 7.5 18.75 C 5.429688 18.75 3.75 17.070312 3.75 15 C 3.75 12.929688 5.429688 11.25 7.5 11.25 C 9.570312 11.25 11.25 12.929688 11.25 15 Z M 11.25 15 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 26.25 15 C 26.25 17.070312 24.570312 18.75 22.5 18.75 C 20.429688 18.75 18.75 17.070312 18.75 15 C 18.75 12.929688 20.429688 11.25 22.5 11.25 C 24.570312 11.25 26.25 12.929688 26.25 15 Z M 26.25 15 "/>
+</g>
+</svg>
