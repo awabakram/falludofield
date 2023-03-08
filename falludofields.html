@@ -30,20 +30,20 @@
 
 
     <div class="board">
-        <canvas id="canvas" width="1500" height="1500" style="border:1px solid #000000;"></canvas>
+        <canvas tabindex='1' id="canvas" width="1500" height="1500" style="border:1px solid #000000;"></canvas>
     </div>
 
-    <!--<div id="page-mask"></div>-->
-
-    <!--<dialog open id="dialog-box">
-        <h3>It's your turn!</h3>
-        <p>Please roll the dice:</p>
-        <div class="dice-wrapper">
-            <img class="dice" src="dice-1.svg" id="die-1">
-            <img class="dice" src="dice-2.svg" id="die-2">
+    <dialog id="dialog-box">
+        <div id="dialog-container">
+            <h3 id="dialog-h">It's your turn!</h3>
+            <p id="dialog-p">Please roll the dice:</p>
+            <div class="dice-wrapper">
+                <img class="dice" src="dice-1.svg" id="die-1">
+                <img class="dice" src="dice-2.svg" id="die-2">
+            </div>
+            <button id="roll-button">Roll</button>
         </div>
-        <button id="roll-button" onclick="rollDice()">Roll </button>
-    </dialog>-->
+    </dialog>
 
     <div class="rightSide">
         <div>

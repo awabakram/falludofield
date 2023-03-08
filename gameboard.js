@@ -65,9 +65,20 @@ class piece
     }
 }
 
+const init_pos = [
+    // Red
+    [[200, 200], [400, 200], [200, 400], [400, 400]],
+    // Green
+    [[1100, 200], [1300, 200], [1100, 400], [1300, 400]],
+    // Blue
+    [[200, 1100], [400, 1100], [200, 1300], [400, 1300]],
+    // Yellow
+    [[1100, 1100], [1300, 1100], [1100, 1300], [1300, 1300]]
+]
+
 const paths = [
     // Red
-    [[-1,-1],[1,6],[2,6],[3,6],[4,6],[5,6],
+    [[2,4],[1,6],[2,6],[3,6],[4,6],[5,6],
     [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],
     [7,0],[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],
     [9,6],[10,6],[11,6],[12,6],[13,6],[14,6],
@@ -75,7 +86,40 @@ const paths = [
     [8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],
     [6,14],[6,13],[6,12],[6,11],[6,10],[6,9],[5,8],
     [4,8],[3,8],[2,8],[1,8],[0,8],[0,7],[1,7],[2,7],
-    [3,7],[4,7],[5,7],[-1,-1]]
+    [3,7],[4,7],[5,7],[-1,-1]],
+
+    // Green
+    [[-1, -1],[8,1],[8,2],[8,3],[8,4],[8,5],
+    [9,6],[10,6],[11,6],[12,6],[13,6],[14,6],
+    [14,7],[14,8],[13,8],[12,8],[11,8],[10,8],
+    [9,8],[8,9],[8,10],[8,11],[8,12],[8,13],
+    [8,14],[7,14],[6,14],[6,13],[6,12],[6,11],
+    [6,10],[6,9],[5,8],[4,8],[3,8],[2,8],[1,8],
+    [0,8],[0,7],[0,6],[1,6],[2,6],[3,6],[4,6],[5,6],
+    [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],[7,0],
+    [7,1],[7,2],[7,3],[7,4],[7,5],[-1,-1]],
+
+    // Blue
+    [[-1,-1],[6,13],[6,12],[6,11],[6,10],[6,9],
+    [5,8],[4,8],[3,8],[2,8],[1,8],[0,8],[0,7],
+    [0,6],[1,6],[2,6],[3,6],[4,6],[5,6],[6,5],
+    [6,4],[6,3],[6,2],[6,1],[6,0],[7,0],[8,0],
+    [8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],
+    [11,6],[12,6],[13,6],[14,6],[14,7],[14,8],
+    [13,8],[12,8],[11,8],[10,8],[9,8],[8,9],[8,10],
+    [8,11],[8,12],[8,13],[8,14],[7,14],[7,13],
+    [7,12],[7,11],[7,10],[7,9],[-1,-1]],
+
+    // Yellow
+    [[-1,-1],[13,8],[12,8],[11,8],[10,8],[9,8],[8,9],
+    [8,10],[8,11],[8,12],[8,13],[8,14],[7,14],
+    [6,14],[6,13],[6,12],[6,11],[6,10],[6,9],
+    [5,8],[4,8],[3,8],[2,8],[1,8],[0,8],[0,7],
+    [0,6],[1,6],[2,6],[3,6],[4,6],[5,6],[6,5],
+    [6,4],[6,3],[6,2],[6,1],[6,0],[7,0],[8,0],
+    [8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],
+    [11,6],[12,6],[13,6],[14,6],[14,7],[13,7],
+    [12,7],[11,7],[10,7],[9,7],[-1,-1]]
 ];
 
 console.log(paths[0].length);
@@ -83,6 +127,7 @@ console.log(paths[0].length);
 //varaibles to show the current value of the two dice
 var dice1 = 0;
 var dice2 = 0;
+var dice = 0;
 
 //shows whether dice has been rolled this turn
 var diceRolled = false;
@@ -100,57 +145,6 @@ var safeSpaces = ["2", "10", "15", "23", "28", "36", "41", "49"];
 
 var pieces = [];
 
-
-function dice1ButtonPressed()
-{
-    // if (playerTurn == 1)
-    // {
-    //     document.getElementById(pieces[0].path[pieces[0].position]).addEventListener('click', function(){move(pieces[0],dice1)});
-    //     document.getElementById(pieces[1].path[pieces[1].position]).addEventListener('click', function(){move(pieces[1],dice1)});
-    //     document.getElementById(pieces[2].path[pieces[2].position]).addEventListener('click', function(){move(pieces[2],dice1)});
-    //     document.getElementById(pieces[3].path[pieces[3].position]).addEventListener('click',function(){move(pieces[3],dice1)});        
-    // }
-    //if the dice roll has already been used
-    if (document.getElementById("dice").backgroundImage == 'url("./DiceX.jpeg")')
-    {
-        return;
-    }
-
-    if (playerTurn == 1)
-    {
-        for (let i = 0; i < 4; i++) 
-        {
-            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
-        }
-    }
-    else if (playerTurn == 2)
-    {
-        for (let i = 4; i < 8; i++) 
-        {
-            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
-        }
-    }
-    else if (playerTurn == 3)
-    {
-        for (let i = 8; i < 12; i++) 
-        {
-            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
-        }
-    }
-    else if (playerTurn == 4)
-    {
-        for (let i = 12; i < 16; i++) 
-        {
-            document.getElementById(pieces[i].path[pieces[i].position]).addEventListener('click', function(){move(pieces[i],dice1)});          
-        }
-    }
-
-    document.getElementById("instructions").innerHTML = "Select piece to use the dice roll " + dice1 + "on";
-    //dice1 = 0;
-    document.getElementById("dice").style.backgroundImage = 'url("./DiceX.jpeg")';
-
-}
-
 //function to retun a random number between two ints (inclusive)
 function randomInt(min, max)
 {
@@ -160,77 +154,65 @@ function randomInt(min, max)
 //function to roll the two dice
 function rollDice()
 {
+    $('#roll-button').off("click");
     dice1 = randomInt(1,6);
     dice2 = randomInt(1,6);
-    switch (dice1)
-    {
-        case 1:
-            document.getElementById("dice").style.backgroundImage = 'url("./Dice1.jpeg")';
-            break;
-        case 2:
-            document.getElementById("dice").style.backgroundImage = 'url("./Dice2.jpeg")';
-            break;
-        case 3:
-            document.getElementById("dice").style.backgroundImage = 'url("./Dice3.jpeg")';
-            break;
-        case 4:
-            document.getElementById("dice").style.backgroundImage = 'url("./Dice4.jpeg")';
-            break;
-        case 5:
-            document.getElementById("dice").style.backgroundImage = 'url("./Dice5.jpeg")';
-            break;
-        case 6:
-            document.getElementById("dice").style.backgroundImage = 'url("./Dice6.jpeg")';
-            break;
 
-    }
-    switch (dice2)
-    {
-        case 1:
-            document.getElementById("dice2").style.backgroundImage = 'url("./Dice1.jpeg")';
-            break;
-        case 2:
-            document.getElementById("dice2").style.backgroundImage = 'url("./Dice2.jpeg")';
-            break;
-        case 3:
-            document.getElementById("dice2").style.backgroundImage = 'url("./Dice3.jpeg")';
-            break;
-        case 4:
-            document.getElementById("dice2").style.backgroundImage = 'url("./Dice4.jpeg")';
-            break;
-        case 5:
-            document.getElementById("dice2").style.backgroundImage = 'url("./Dice5.jpeg")';
-            break;
-        case 6:
-            document.getElementById("dice2").style.backgroundImage = 'url("./Dice6.jpeg")';
-            break;
-
-    }
-
-    console.log("dice rolled");
-    if (dice1 || dice2 == 6) {
-
-    }
-    //TODO add dice roll to the queue and set dicerolled to false whena double 6 is rolled, also tell the player to roll again
-    diceRolled = true;
-    // diceQueue.push(dice1);
-    // diceQueue.push(dice2);
-
-    // if (dice1 == 6 && dice2 == 6)
-    // {
-    //     diceRolled = false;
-    // }
-
-    /*random_timer = randomInt(10, 20);
+    random_timer = randomInt(10, 20);
+    roll_timer = 0;
     for (var i = 0; i < random_timer; i++) {
         setTimeout(() => { 
+            roll_timer++;
             dice1 = randomInt(1,6);
-            console.log("fuck"); 
-        $('#die-1').attr("src", "./dice-" +  dice1.toString() + ".svg") 
-        $('#die-1').addClass("dice-shake");
-        if (i == random_timer) $('#die-1'.removeClass("diceShake"));
+            dice2 = randomInt(1,6);
+        $('#die-1').attr("src", "./dice-" +  dice1.toString() + ".svg");
+        $('#die-2').attr("src", "./dice-" +  dice2.toString() + ".svg");
+        if (roll_timer == random_timer) { // Dice done rolling 
+            // Check that our turn can continue
+            var invalid = true;
+            for (var i = 0; i < 4; ++i) {
+                if (pieces[playerTurn][i].position != 0)
+                    invalid = false;
+            }   
+            if (invalid) {
+                if (dice1 != 6 && dice2 != 6) {
+                    $('#dialog-h').text("Unlucky");
+                    $('#dialog-p').text("Must roll a 6 to proceed");
+                    $('#roll-button').text("Next Turn").off("click").on("click", function() { turnOver(false) });
+                }
+                else {
+                    dice = 6;
+                    $('#dialog-h').text("Great!");
+                    $('#dialog-p').text("You can now move a piece");
+                    $("#roll-button").off("click");
+                    $('#roll-button').text("Continue").on("click", function() {
+                        document.getElementById("dialog-box").close();
+                    });
+                }
+            }
+            else {          
+                $('#dialog-p').text("Select a die to use");
+                $('#roll-button').hide();       
+                $(".dice").hover(function() {
+                    $( this ).addClass("dice-shake");
+                }, function() { 
+                    $( this ).removeClass("dice-shake");
+                });
+                
+                $("#die-1").on("click", function() {
+                    dice = dice1;
+                    document.getElementById("dialog-box").close();
+                });
+                $("#die-2").on("click", function() {
+                    dice = dice2;
+                    document.getElementById("dialog-box").close();
+                });
+            }
+
+        }
+            console.log("die should be done now");
         }, 50 + i*50); // Queue these to make a cute animation
-    }*/
+    }
    
 }
 
@@ -504,24 +486,44 @@ function callbackPieceClicked(layer, pieceI, $canvas) {
 
     console.log("red piece clicked");
 
-    if (diceRolled) {
-        var mov = pieces[np].position + dice1; // Temp, make it which dice is picked
-        if (pieces[np].position == 0) {
-            if (dice1 != 6 && dice2 != 6)
-                return; // We can't move this piece out of the home area without a 6
-            else 
-                mov = 1;
-        }
-        animatePieceMoving(layer, pieceI, turn, np, mov, $canvas);
-    }
+    var mov = pieces[turn][np].position + 1;
+    // TEMP
+    if (turn == 1 && pieces[turn][np].position != 0) mov = pieces[turn][np].position;
+    //if (pieces[turn][np].position == 0) {
+    //    if (dice != 6)
+    //        return; // We can't move this piece out of the home area without a 6
+    //    else 
+    //        mov = 1;
+    //}
+    animatePieceMoving(layer, pieceI, turn, np, mov, $canvas);
 }
 
 function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
-    if (pieces[np].position < mov)
-        pieces[np].position += 1
-    else return;
-    var xx = paths[turn][pieces[np].position][0] * 100;
-    var yy = paths[turn][pieces[np].position][1] * 100;
+    if (pieces[turn][np].position < mov)
+        pieces[turn][np].position += 1
+    else {
+        for (var i = 0; i < 4; ++i) {
+            if (i == turn) continue;
+            for (var j = 0; j < 4; ++j) {
+                if (paths[i][pieces[i][j].position][0] == paths[turn][pieces[turn][np].position][0] &&
+                    paths[i][pieces[i][j].position][1] == paths[turn][pieces[turn][np].position][1]) {
+                    pieces[i][j].position = 0;
+                    var xx = init_pos[i][j][0];
+                    var yy = init_pos[i][j][1];
+                    $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[0], {
+                        x: xx, y: yy
+                    }, 200);
+                    $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[1], {
+                        x: xx, y: yy-100
+                    }, 200); 
+                }
+            }
+        }
+        turnOver();
+        return;
+    }
+    var xx = paths[turn][pieces[turn][np].position][0] * 100;
+    var yy = paths[turn][pieces[turn][np].position][1] * 100;
     $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[0], {
         x: xx+50, y: yy+50
     }, {
@@ -533,6 +535,20 @@ function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
     $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[1], {
         x: xx+50, y: yy-50
     }, 200);
+    $canvas.animateLayer($canvas.getLayerGroup("pieces" + pieceI)[2], {
+        x: xx+50, y: yy-50
+    }, 200);}
+
+function turnOver(wait = true) {
+    //playerTurn++;
+    //if (playerTurn > 3) playerTurn = 0;
+    setTimeout(() => { 
+        $('#dialog-h').text("It's your turn!"); // Todo: multiplayer
+        $('#dialog-p').text("Please roll the dice:");
+        $('#roll-button').show().off("click").text("Roll").on("click", rollDice)
+        $('.dice').off('mouseenter mouseleave click');
+        //document.getElementById("dialog-box").showModal(); // TODO: TEMP
+    }, wait ? 1000 : 0);
 }
 
 function drawCircle(x, y, radius, ctx) {
@@ -578,6 +594,16 @@ function drawPiece(x, y, colour, pieceI, $canvas) {
         click: function(layer) {
             callbackPieceClicked(layer, pieceI, $canvas);
         }
+    }).drawText({
+        layer: true,
+        groups: ['pieces'+pieceI],
+        fromCenter: true,
+        fillStyle: colour,
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: x, y: y-100,
+        text: "1",
+        fontSize: 36
     });
     
     /*ctx.beginPath()
@@ -602,6 +628,15 @@ function initCanvas() {
     $.jCanvas.defaults.layer = true;
     var $canvas = $('canvas');
     
+    // DEFAULTS
+    $('canvas').keypress(function(event) {
+        //if (event.key == "A") {
+            playerTurn++;
+            if (playerTurn > 3) playerTurn = 0;
+            console.log(playerTurn);
+        //}
+    });
+    document.getElementById("canvas").focus();
     $canvas.drawRect({
         fillStyle: "#EE2E31",
         strokeStyle: "#000000",
@@ -878,6 +913,26 @@ function initCanvas() {
     drawPiece(400, 200, "#EE2E31", "01", $canvas);
     drawPiece(200, 400, "#EE2E31", "02", $canvas);
     drawPiece(400, 400, "#EE2E31", "03", $canvas);
+
+    drawPiece(1100, 200, "#32CD32", "10", $canvas);
+    drawPiece(1300, 200, "#32CD32", "11", $canvas);
+    drawPiece(1100, 400, "#32CD32", "12", $canvas);
+    drawPiece(1300, 400, "#32CD32", "13", $canvas);
+
+    drawPiece(200, 1100, "#00bfff", "20", $canvas);
+    drawPiece(400, 1100, "#00bfff", "21", $canvas);
+    drawPiece(200, 1300, "#00bfff", "22", $canvas);
+    drawPiece(400, 1300, "#00bfff", "23", $canvas);
+
+    drawPiece(1100, 1100, "#fada5e", "30", $canvas);
+    drawPiece(1300, 1100, "#fada5e", "31", $canvas);
+    drawPiece(1100, 1300, "#fada5e", "32", $canvas);
+    drawPiece(1300, 1300, "#fada5e", "33", $canvas);
+
+    $('#roll-button').on("click", rollDice);
+    //document.getElementById("dialog-box").showModal();
+    
+    
     /*ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(100, 100, 400, 400);
     ctx.strokeRect(100, 100, 400, 400);
@@ -925,7 +980,10 @@ function initCanvas() {
     
     // TEMP
 
-    pieces = [new piece(), new piece(), new piece(), new piece()]
+    pieces = [[new piece(), new piece(), new piece(), new piece()],
+              [new piece(), new piece(), new piece(), new piece()],
+              [new piece(), new piece(), new piece(), new piece()],
+              [new piece(), new piece(), new piece(), new piece()]  ]
 }
 
 window.onload = initCanvas();//initialisePieces();  
