@@ -18,7 +18,8 @@
         <label>Password</label>
         <input type="password" name="password" placeholder="Password..."><br>
         
-        <button type="submit">Login</button>
+        <button type="submit">Login</button><br>
+        <a href="signuppage.php">Create Account</a>
     </form>
 </body>
 </html>
