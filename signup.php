@@ -22,18 +22,54 @@ $email = validate($_POST['email']);
 
 if ( $pass === $repass)
 {
-    $sql = "SELECT * FROM users WHERE user_name='$uname'";
-    $query = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($query) > 0)
+    $passREGEX = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/";
+    
+    if(preg_match($passREGEX, $pass))
     {
-        echo "Username is already taken.";
+        $emailREGEX = "/^[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/";
+        if (preg_match($emailREGEX, $email))
+        {
+            $noWhiteSpaceREGEX = "/^\S{1,}\z/";
+            if (preg_match($noWhiteSpaceREGEX, $nickname))
+            {
+                if (preg_match($noWhiteSpaceREGEX, $uname))
+                {
+
+                    $sql = "SELECT * FROM users WHERE user_name='$uname'";
+                    $query = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($query) > 0)
+                    {
+                        echo "Username is already taken.";
+                    }
+                    else
+                    {
+                        $sql = "INSERT INTO users (user_name, password, nickname, email) VALUES ('$uname','$pass','$nickname','$email')";
+                        $query = mysqli_query($conn, $sql);
+                        header("Location: home.php");
+                    }
+                }
+                else
+                {
+                    echo "Username must not contain any spaces.";
+                }
+            }
+            else
+            {
+                echo "Nickname must not contain any spaces";
+            }
+
+        }
+        else
+        {
+            echo "Enter a valid email.";
+        }
     }
     else
     {
-        $sql = "INSERT INTO users (user_name, password, nickname, email) VALUES ('$uname','$pass','$nickname','$email')";
-        $query = mysqli_query($conn, $sql);
-        header("Location: home.php");
+        echo "Password MUST contain: 8 characters minimum, 1 Uppercase, 1 Lowercase, 1 digit, 1 special character.";
+
     }
+
 
 }
 else
