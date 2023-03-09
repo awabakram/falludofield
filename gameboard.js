@@ -1,67 +1,8 @@
 class piece 
 {
-    constructor()
+    constructor(position = 0)
     {
-        //each piece has a unique id identifier
-        //this.id = id
-        //colour indicates what colour the piece is
-        //this.colour = colour;
-        //position is used to indicate how far along the path the piece is, used as an index for the path
-        this.position = 0;
-        //completed is used to indicate whether the piece has reached the end yet
-        //this.completed = false;
-
-        /*if (colour == "yellow")
-        {
-            //path shows what squares the piece can move along on its journey to the end
-            this.path = [startPosition,"2","3","4","5","6","7","8","9","10",
-                        "11","12","13","14","15","16","17","18","19","20",
-                        "21","22","23","24","25","26","27","28","29","30",
-                        "31","32","33","34","35","36","37","38","39","40",
-                        "41","42","43","44","45","46","47","48","49","50",
-                        "51","52","53","54","55","56","57","73"];
-            this.image = 'url("./yellowPiece.jpg")';
-        }
-        if (colour == "green")
-        {
-            this.path = [startPosition,"15","16","17","18","19","20",
-                        "21","22","23","24","25","26","27","28","29","30",
-                        "31","32","33","34","35","36","37","38","39","40",
-                        "41","42","43","44","45","46","47","48","49","50",
-                        "51","52","1","2","3","4","5","6","7","8","9","10",
-                        "11","12","13","58","59","60","61","62","73"];
-            this.image = 'url("./greenPiece.jpg")';
-        }
-        if (colour == "blue")
-        {
-            this.path = [startPosition,"41","42","43","44","45","46",
-                        "47","48","49","50","51","52","1","2","3","4","5",
-                        "6","7","8","9","10","11","12","13","14","15","16",
-                        "17","18","19","20","21","22","23","24","25","26",
-                        "27","28","29","30","31","32","33","34","35","36",
-                        "37","38","39","68","69","70","71","72","73"];
-            this.image = 'url("./bluePiece.jpg")';
-        }
-        if (colour == "red")
-        {
-            this.path = [startPosition,"28","29","30","31","32","33",
-                        "34","35","36","37","38","39","40","41","42","43",
-                        "44","45","46","47","48","49","50","51","52","1", 
-                        "2","3","4","5","6","7","8","9","10","11",
-                        "12","13","14","15","16","17","18","19","20","21",
-                        "22","23","24","25","26","63","64","65","66","67","73"];
-            this.image = 'url("./redPiece.jpg")';
-        }*/
-        //draw the piece at the start position
-        //document.getElementById(startPosition).style.backgroundImage = this.image;
-    }
-
-    //method to delete the piece and reset its position back to its start position
-    reset()
-    {
-        //document.getElementById(this.path[this.position]).backgroundImage = "none";
-        //this.position = 0;
-        //document.getElementById(this.path[this.position]).backgroundImage = this.image;
+        this.position = position;
     }
 }
 
@@ -86,7 +27,7 @@ const paths = [
     [8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],
     [6,14],[6,13],[6,12],[6,11],[6,10],[6,9],[5,8],
     [4,8],[3,8],[2,8],[1,8],[0,8],[0,7],[1,7],[2,7],
-    [3,7],[4,7],[5,7],[-1,-1]],
+    [3,7],[4,7],[5,7],[6,7]],
 
     // Green
     [[-1, -1],[8,1],[8,2],[8,3],[8,4],[8,5],
@@ -97,7 +38,7 @@ const paths = [
     [6,10],[6,9],[5,8],[4,8],[3,8],[2,8],[1,8],
     [0,8],[0,7],[0,6],[1,6],[2,6],[3,6],[4,6],[5,6],
     [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],[7,0],
-    [7,1],[7,2],[7,3],[7,4],[7,5],[-1,-1]],
+    [7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],
 
     // Blue
     [[-1,-1],[6,13],[6,12],[6,11],[6,10],[6,9],
@@ -108,7 +49,7 @@ const paths = [
     [11,6],[12,6],[13,6],[14,6],[14,7],[14,8],
     [13,8],[12,8],[11,8],[10,8],[9,8],[8,9],[8,10],
     [8,11],[8,12],[8,13],[8,14],[7,14],[7,13],
-    [7,12],[7,11],[7,10],[7,9],[-1,-1]],
+    [7,12],[7,11],[7,10],[7,9],[7,8]],
 
     // Yellow
     [[-1,-1],[13,8],[12,8],[11,8],[10,8],[9,8],[8,9],
@@ -119,15 +60,19 @@ const paths = [
     [6,4],[6,3],[6,2],[6,1],[6,0],[7,0],[8,0],
     [8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],
     [11,6],[12,6],[13,6],[14,6],[14,7],[13,7],
-    [12,7],[11,7],[10,7],[9,7],[-1,-1]]
+    [12,7],[11,7],[10,7],[9,7],[8,7]]
 ];
 
-console.log(paths[0].length);
+safe_spaces = [
+    [6,2], [12,6], [8,12], [2,8]
+]
 
 //varaibles to show the current value of the two dice
 var dice1 = 0;
 var dice2 = 0;
 var dice = 0;
+
+var winner = -1;
 
 //shows whether dice has been rolled this turn
 var diceRolled = false;
@@ -216,246 +161,16 @@ function rollDice()
    
 }
 
-//function to initialise all of the pieces
-function initialisePieces()
-{
-    /*pieces = [new piece("y0","yellow", "insideYellow1"), 
-    new piece("y1","yellow", "insideYellow2"),
-    new piece("y2","yellow", "insideYellow3"),
-    new piece("y3","yellow", "insideYellow4"),
-    new piece("g0","green", "insideGreen1"),
-    new piece("g1","green", "insideGreen2"),
-    new piece("g2","green", "insideGreen3"),
-    new piece("g3","green", "insideGreen4"),
-    new piece("b0","blue", "insideBlue1"),
-    new piece("b1","blue", "insideBlue2"),
-    new piece("b2","blue", "insideBlue3"),
-    new piece("b3","blue", "insideBlue4"),
-    new piece("r0","red", "insideRed1"),
-    new piece("r1","red", "insideRed2"),
-    new piece("r2","red", "insideRed3"),
-    new piece("r3","red", "insideRed4")]*/
-
-    // yellowPiece1 = new piece("y0","yellow", "insideYellow1");
-    // yellowPiece2 = new piece("y1","yellow", "insideYellow2");
-    // yellowPiece3 = new piece("y2","yellow", "insideYellow3");
-    // yellowPiece4 = new piece("y3","yellow", "insideYellow4");
-
-    // //yellowPieces = [new piece("yellow", "insideYellow1"), new piece("yellow", "insideYellow2"),new piece("yellow", "insideYellow3"),new piece("yellow", "insideYellow4")]
-
-    // greenPiece1 = new piece("g0","green", "insideGreen1");
-    // greenPiece2 = new piece("g1","green", "insideGreen2");
-    // greenPiece3 = new piece("g2","green", "insideGreen3");
-    // greenPiece4 = new piece("g3","green", "insideGreen4");
-
-    // bluePiece1 = new piece("b0","blue", "insideBlue1");
-    // bluePiece2 = new piece("b1","blue", "insideBlue2");
-    // bluePiece3 = new piece("b2","blue", "insideBlue3");
-    // bluePiece4 = new piece("b3","blue", "insideBlue4");
-
-    // redPiece1 = new piece("r0","red", "insideRed1");
-    // redPiece2 = new piece("r1","red", "insideRed2");
-    // redPiece3 = new piece("r2","red", "insideRed3");
-    // redPiece4 = new piece("r3","red", "insideRed4");
+function drawStar(cx, cy, spikes, radius){
+    $('canvas').drawPolygon({
+        strokeStyle: "#000000",
+        strokeWidth: 5,
+        x: cx, y: cy,
+        radius: radius,
+        sides: spikes,
+        concavity: 0.5
+    });
 }
-
-function checkIfPlayerFinished(playerNumber)
-{
-    let finished = true;
-    if (playerNumber == 1)
-    {
-        for (let i = 0; i < 4; i++) {
-            if (pieces[i].completed == false)
-            {
-                finished = false;
-            }
-            
-        }
-    }
-    else if (playerNumber == 2)
-    {
-        for (let i = 4; i < 8; i++) {
-            if (pieces[i].completed == false)
-            {
-                finished = false;
-            }
-            
-        }
-    }
-    if (playerNumber == 3)
-    {
-        for (let i = 8; i < 12; i++) {
-            if (pieces[i].completed == false)
-            {
-                finished = false;
-            }
-            
-        }
-    }
-    if (playerNumber == 4)
-    {
-        for (let i = 12; i < 16; i++) {
-            if (pieces[i].completed == false)
-            {
-                finished = false;
-            }
-            
-        }
-    }
-
-    return finished;
-}
-
-function checkIfMovePossible(diceRoll)
-{
-    //when the players rolled a 6, you can always move a piece
-    if (diceRoll == 6)
-    {
-        return true;
-    }
-    let possible = false;
-    if (playerTurn == 1)
-    {
-        for (let i = 0; i < 4; i++) {
-            if (pieces[i].position != 0)
-            {
-                possible = true;
-            }      
-        }
-    }
-}
-function move(pieceToMove, diceRoll) 
-{
-    //if its still inside you need a 6 to take it out
-    if (pieceToMove.position == 0)
-    {
-        if (diceRoll == 6)
-        {
-            document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = "none";
-            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML.replace(pieceToMove.colour[0], "");
-            pieceToMove.position = pieceToMove.position += 1;
-            document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = pieceToMove.image;
-            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML += pieceToMove.id + ",";
-            moveSuccessful = true;
-        }
-        else
-        {
-            document.getElementById("instructions").innerHTML = "You need a 6 to take out this piece";
-            moveSuccessful = false;
-        }
-    }
-    else
-    {
-        document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = "none";
-        document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML.replace(pieceToMove.id + ",", "");
-        pieceToMove.position += diceRoll;
-        if (pieceToMove.position > pieceToMove.path.length) //TODO check if its actually the length or if its shorter
-        {
-            pieceToMove.completed = true;
-            moveSuccessful == true;
-        }
-
-        let divString = document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML;
-                
-        //checking if the space the piece has moved to is a safe space
-        let isSafeSpace = false;
-        for (let i = 0; i < safeSpaces.length; i++) 
-        {
-            if (pieceToMove.path[pieceToMove.position] == safeSpaces[i])
-            {
-                isSafeSpace = true;
-                break;
-            }
-        }
-
-        //if its not a safe space then check if theres any enemy pieces to kill 
-        if (isSafeSpace == false)
-        {
-            //if there is enemy pieces, then kill the enemy pieces in the square
-            if (divString != "")
-            {
-                let splitDivString = divString.split(",");
-                let newSplitDivString = "";
-                for (let i = 0; i < splitDivString.length; i++) 
-                {
-                    //if there is a piece which isn't the same colour
-                    if (splitDivString[i][0] != pieceToMove.id[0])
-                    {
-                        //look through the pieces to find the matching id
-                        for (let j = 0; j < pieces.length; j++) 
-                        {
-                            if (pieces[j].id == splitDivString[i])
-                            {
-                                //reset the piece
-                                pieces[j].reset();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //if the id is of the same colour then we're keeping the piece
-                        newSplitDivString += splitDivString[i];
-                    }
-
-                }
-            }
-            //update the div string
-            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML = newSplitDivString + pieceToMove.id + ",";
-            moveSuccessful = true;
-        }
-        else
-        {
-            //if it is a safe space then just add the piece to the square
-            document.getElementById(pieceToMove.path[pieceToMove.position]).style.backgroundImage = pieceToMove.image;
-            document.getElementById(pieceToMove.path[pieceToMove.position]).innerHTML += pieceToMove.id + ",";
-            moveSuccessful = true;
-        }
-        
-
-        
-    }
-}
-
-
-function playGame()
-{
-    initialisePieces()
-    while (!gameFinished)
-    {
-        diceRolled = false;
-        while(!diceRolled)
-        {
-            //TODO status string = "roll the dice"
-        }
-        //TODO implemet a queue for the dice rolls, keep asking to move while the queue isnt empty
-        
-
-    }
-}
-
-function drawStar(cx, cy, spikes, outerRadius, innerRadius, ctx){
-    var rot=Math.PI/2*3;
-    var x=cx;
-    var y=cy;
-    var step=Math.PI/spikes;
-
-    ctx.beginPath();
-    ctx.moveTo(cx,cy-outerRadius)
-    for(i=0;i<spikes;i++){
-        x=cx+Math.cos(rot)*outerRadius;
-        y=cy+Math.sin(rot)*outerRadius;
-        ctx.lineTo(x,y)
-        rot+=step
-
-        x = cx+ Math.cos(rot)*innerRadius;
-        y = cy+Math.sin(rot)*innerRadius;
-        ctx.lineTo(x,y)
-        rot += step
-    }
-    ctx.lineTo(cx,cy-outerRadius);
-    ctx.closePath();
-    ctx.stroke();
-  }
 
 function drawSquare(x, y, $canvas) {
     var style = "#FFFFFF";
@@ -483,44 +198,94 @@ function callbackPieceClicked(layer, pieceI, $canvas) {
     var np = Number(pieceI[1]);
     if (turn != playerTurn) 
         return;
-
-    console.log("red piece clicked");
-
-    var mov = pieces[turn][np].position + 1;
-    // TEMP
-    if (turn == 1 && pieces[turn][np].position != 0) mov = pieces[turn][np].position;
-    //if (pieces[turn][np].position == 0) {
-    //    if (dice != 6)
-    //        return; // We can't move this piece out of the home area without a 6
-    //    else 
-    //        mov = 1;
-    //}
+    
+    if (pieces[turn][np].position == 57) 
+        return; // We can't move this piece, it's done
+    var mov = pieces[turn][np].position + dice;
+    if (pieces[turn][np].position == 0) {
+        if (dice != 6)
+            return; // We can't move this piece out of the home area without a 6
+        else 
+            mov = 1;
+    }
     animatePieceMoving(layer, pieceI, turn, np, mov, $canvas);
 }
 
+function victory(turn) {
+    winner = turn;
+    colours = ["Red", "Green", "Blue", "Yellow"];
+    setTimeout(() => { 
+        $('#dialog-h').text(colours[turn] + " wins!"); 
+        $('#dialog-p').text("");
+        $('#roll-button').show().off("click").text("Back to menu");
+        $('.dice').hide();
+        if (!document.getElementById("dialog-box").open)
+            document.getElementById("dialog-box").showModal();
+        }, 1000) // TODO: TEMP
+}
+
 function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
+    if (mov > 57) mov = 57;
     if (pieces[turn][np].position < mov)
         pieces[turn][np].position += 1
     else {
-        for (var i = 0; i < 4; ++i) {
-            if (i == turn) continue;
-            for (var j = 0; j < 4; ++j) {
-                if (paths[i][pieces[i][j].position][0] == paths[turn][pieces[turn][np].position][0] &&
-                    paths[i][pieces[i][j].position][1] == paths[turn][pieces[turn][np].position][1]) {
-                    pieces[i][j].position = 0;
-                    var xx = init_pos[i][j][0];
-                    var yy = init_pos[i][j][1];
-                    $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[0], {
-                        x: xx, y: yy
-                    }, 200);
-                    $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[1], {
-                        x: xx, y: yy-100
-                    }, 200); 
+        var safe = false;
+        for (var k = 0; k < 4; ++k) {
+            // Iterate through each safe space and check we're not on one
+            if (paths[turn][pieces[turn][np].position][0] == safe_spaces[k][0] &&
+                paths[turn][pieces[turn][np].position][1] == safe_spaces[k][1]) 
+                safe = true;
+        }
+        if (!safe) {
+            for (var i = 0; i < 4; ++i) {
+                if (i == turn) continue;
+                    for (var j = 0; j < 4; ++j) {
+                        if (paths[i][pieces[i][j].position][0] == paths[turn][pieces[turn][np].position][0] &&
+                            paths[i][pieces[i][j].position][1] == paths[turn][pieces[turn][np].position][1]) {
+                            pieces[i][j].position = 0;
+                            var xx = init_pos[i][j][0];
+                            var yy = init_pos[i][j][1];
+                            $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[0], {
+                                x: xx, y: yy
+                            }, 200);
+                            $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[1], {
+                                x: xx, y: yy-100
+                            }, 200); 
+                        }
+                    }
                 }
-            }
         }
         turnOver();
         return;
+    }
+
+    for (var i = 0; i < 4; ++i) {
+        for (var j = 0; j < 4; ++j) {
+            $canvas.setLayer($canvas.getLayerGroup("pieces" + turn.toString() + i.toString())[2], {
+                text: ""
+            });
+            $canvas.setLayer($canvas.getLayerGroup("pieces" + turn.toString() + j.toString())[2], {
+                text: ""
+            });
+        }
+    }
+    for (var i = 0; i < 4; ++i) {
+        for (var j = 0; j < 4; ++j) {
+            if (i == j) continue;
+            if (pieces[turn][i].position == pieces[turn][j].position) {
+                if (pieces[turn][i].position != 0) {
+                    var cur = $canvas.measureText($canvas.getLayerGroup("pieces" + turn.toString() + i.toString())[2]).text;
+                    if (cur == "") cur = "1";
+                    if (pieces[turn][i].position == 57 && cur == "3") { // We've won
+                        victory(turn);
+                    }
+                    $canvas.setLayer($canvas.getLayerGroup("pieces" + turn.toString() + i.toString())[2], {
+                        text: (parseInt(cur) + 1).toString()
+                    });
+                    $canvas.drawLayers();
+                }
+            }
+        } 
     }
     var xx = paths[turn][pieces[turn][np].position][0] * 100;
     var yy = paths[turn][pieces[turn][np].position][1] * 100;
@@ -540,14 +305,24 @@ function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
     }, 200);}
 
 function turnOver(wait = true) {
-    //playerTurn++;
-    //if (playerTurn > 3) playerTurn = 0;
+    if (winner != -1) return;
+    playerTurn++;
+    if (playerTurn > 3) playerTurn = 0;
+    for (var i = 0; i < 4; ++i) {
+        var layers = $('canvas').getLayerGroup("pieces" + playerTurn.toString() + i.toString());
+        for (var j = 0; j < 3; j++) { 
+            $('canvas').moveLayer(layers[j], 999+j); 
+        }
+    }
+
+    $('canvas').drawLayers();
     setTimeout(() => { 
         $('#dialog-h').text("It's your turn!"); // Todo: multiplayer
         $('#dialog-p').text("Please roll the dice:");
         $('#roll-button').show().off("click").text("Roll").on("click", rollDice)
         $('.dice').off('mouseenter mouseleave click');
-        //document.getElementById("dialog-box").showModal(); // TODO: TEMP
+        if (!document.getElementById("dialog-box").open)
+            document.getElementById("dialog-box").showModal();
     }, wait ? 1000 : 0);
 }
 
@@ -602,7 +377,7 @@ function drawPiece(x, y, colour, pieceI, $canvas) {
         strokeStyle: "#000000",
         strokeWidth: 5,
         x: x, y: y-100,
-        text: "1",
+        text: "",
         fontSize: 36
     });
     
@@ -624,16 +399,16 @@ function drawPiece(x, y, colour, pieceI, $canvas) {
 }
 
 function initCanvas() {
+    
     $.jCanvas.defaults.fromCenter = false;
     $.jCanvas.defaults.layer = true;
     var $canvas = $('canvas');
     
     // DEFAULTS
-    $('canvas').keypress(function(event) {
+    $('canvas').keypress(function(event) { // TODO: TEMP
         //if (event.key == "A") {
             playerTurn++;
             if (playerTurn > 3) playerTurn = 0;
-            console.log(playerTurn);
         //}
     });
     document.getElementById("canvas").focus();
@@ -909,6 +684,13 @@ function initCanvas() {
         for (var j = 9; j < 15; j++)
             drawSquare(i, j, $canvas);
 
+                
+    drawStar(210, 815, 5, 40);
+    drawStar(610, 215, 5, 40);
+    drawStar(1210, 615, 5, 40);
+    drawStar(810, 1215, 5, 40);
+    
+
     drawPiece(200, 200, "#EE2E31", "00", $canvas);
     drawPiece(400, 200, "#EE2E31", "01", $canvas);
     drawPiece(200, 400, "#EE2E31", "02", $canvas);
@@ -930,9 +712,8 @@ function initCanvas() {
     drawPiece(1300, 1300, "#fada5e", "33", $canvas);
 
     $('#roll-button').on("click", rollDice);
-    //document.getElementById("dialog-box").showModal();
-    
-    
+    document.getElementById("dialog-box").showModal();
+
     /*ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(100, 100, 400, 400);
     ctx.strokeRect(100, 100, 400, 400);
@@ -966,11 +747,6 @@ function initCanvas() {
     drawCircle(1300, 1100, 50, ctx);
     drawCircle(1100, 1300, 50, ctx);
     drawCircle(1300, 1300, 50, ctx);
-
-    drawStar(250, 855, 5, 40, 20, ctx);
-    drawStar(650, 255, 5, 40, 20, ctx);
-    drawStar(1250, 655, 5, 40, 20, ctx);
-    drawStar(850, 1250, 5, 40, 20, ctx);
 
     ctx.fillStyle = "#EE2E31";
     drawPiece(200, 200, ctx);

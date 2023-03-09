@@ -7,28 +7,7 @@
         <link rel="stylesheet" href="gameBoard.css">            
 </head>
 
-
-
 <body>
-    <div class="topRow">
-        <div class = "leftButton">
-            <button type= "button" class = "logOutButton"> Logout</button> 
-        </div>
-    
-        <div>
-            <p id="turn">
-                It is players 1s turn
-            </p>
-        </div>
-
-        <div>
-            <p id="instructions">
-                Please click the roll dice button
-            </p>
-        </div>
-    </div>
-
-
     <div class="board">
         <canvas tabindex='1' id="canvas" width="1500" height="1500" style="border:1px solid #000000;"></canvas>
     </div>
@@ -44,23 +23,6 @@
             <button id="roll-button">Roll</button>
         </div>
     </dialog>
-
-    <div class="rightSide">
-        <div>
-            <button type="button" class = "leaderboardButton">Leaderboard</button>
-        </div>
-
-        <div class="rollMechanism">
-            <div class="bothDice">
-                <div id = "dice" onclick="dice1ButtonPressed()"></div>
-                <div id = "dice2"></div>  
-            </div>
-            <div>
-                <button type="button" class= "rollDiceButton" onclick="rollDice()">Roll Dice</button>
-            </div>
-        </div>
-    </div>
-
 
     <script src="jquery-3.6.3.min.js"></script>
     <script src="jcanvas.min.js"></script>
