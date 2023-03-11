@@ -64,15 +64,20 @@
     </head>
 
     <body>
-        <label>Please ensure that the details entered match the following criteria:</label><br>
-        <ul>
-            <li>Username MUST not be taken.</li>
-            <li>Passwords MUST match.</li>
-            <li>Password MUST contain: 8 characters minimum, 1 Uppercase, 1 Lowercase, 1 digit, 1 special character.</li>
-            <li>Email MUST be valid.</li>
-            <li>Nickname and Username MUST contain no spaces.</li>
-        </ul>
-        <a href="signuppage.php">Back</a>
+        <div class="container">
+            <form>
+
+                <h1>Please ensure that the details entered match the following criteria:</h1><br>
+                <ul>
+                    <li>Username MUST not be taken.</li>
+                    <li>Passwords MUST match.</li>
+                    <li>Password MUST contain: 8 characters minimum, 1 Uppercase, 1 Lowercase, 1 digit, 1 special character.</li>
+                    <li>Email MUST be valid.</li>
+                    <li>Nickname and Username MUST contain no spaces.</li>
+                </ul>
+                <a href="signuppage.php">Back</a>
+            </form>
+        </div>
     </body>
 
 </html>
