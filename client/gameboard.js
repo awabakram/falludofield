@@ -1,3 +1,8 @@
+
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000");
+
 class piece 
 {
     constructor(position = 0)
@@ -63,64 +68,90 @@ const paths = [
     [12,7],[11,7],[10,7],[9,7],[8,7]]
 ];
 
-safe_spaces = [
+const safe_spaces = [
     [6,2], [12,6], [8,12], [2,8]
 ]
 
-//varaibles to show the current value of the two dice
-var dice1 = 0;
-var dice2 = 0;
-var dice = 0;
-
+const colours = ["Red", "Green", "Blue", "Yellow"];
 var winner = -1;
 
-//shows whether dice has been rolled this turn
-var diceRolled = false;
-// var diceQueue = [];
-
-//To determine who's turn it is
-var playerTurn = 0;
-var moveSuccessful = false;
-
-//shows whether the game is finised yet
-var gameFinished = false;
-
-//array of all of the safe spaces on the board
-var safeSpaces = ["2", "10", "15", "23", "28", "36", "41", "49"];
+var player = -1;
+var playerTurn = -1;
+var started = false;
 
 var pieces = [];
 
-//function to retun a random number between two ints (inclusive)
 function randomInt(min, max)
 {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//function to roll the two dice
+socket.on("start", p => {
+    if (!started) {
+        player = p;
+        console.log("Player: " + player);
+        turnOver();
+        started = true;
+    }
+});
+
+socket.on("re", function() {
+    window.location.reload();
+})
+
+socket.on("dice-roll-anim-set", function(dice1, dice2) {
+    $('#die-1').attr("src", "./dice-" +  dice1.toString() + ".svg");
+    $('#die-2').attr("src", "./dice-" +  dice2.toString() + ".svg");
+});
+
+socket.on("dialog-text-set", function(header, footer) {
+    $('#dialog-h').text(header);
+    $('#dialog-p').text(footer);
+});
+
+socket.on("nextTurn", function(wait, turn) {
+    turnOver(wait, turn);
+    console.log("Somehow calling you?");
+});
+
+socket.on("movePiece", function(pieceI, turn, np, mov) {    
+    animatePieceMoving(null, pieceI, turn, np, mov, $('#canvas'));
+});
+
+socket.on("closeDialog", function() {    
+    document.getElementById("dialog-box").close();
+});
+
+socket.on("winner", function(win) {
+    victory(win);
+});
+
 function rollDice()
 {
     $('#roll-button').off("click");
-    dice1 = randomInt(1,6);
-    dice2 = randomInt(1,6);
 
-    random_timer = randomInt(10, 20);
-    roll_timer = 0;
+    var random_timer = randomInt(10, 20);
+    var roll_timer = 0;
     for (var i = 0; i < random_timer; i++) {
         setTimeout(() => { 
             roll_timer++;
             dice1 = randomInt(1,6);
             dice2 = randomInt(1,6);
+
+        socket.emit("dice-roll-anim", dice1, dice2);
         $('#die-1').attr("src", "./dice-" +  dice1.toString() + ".svg");
         $('#die-2').attr("src", "./dice-" +  dice2.toString() + ".svg");
         if (roll_timer == random_timer) { // Dice done rolling 
             // Check that our turn can continue
             var invalid = true;
             for (var i = 0; i < 4; ++i) {
-                if (pieces[playerTurn][i].position != 0)
+                if (pieces[playerTurn][i].position != 0 && pieces[playerTurn][i].position != 57)
                     invalid = false;
             }   
             if (invalid) {
                 if (dice1 != 6 && dice2 != 6) {
+                    socket.emit("dialog-text", "Unlucky", "They must roll a 6 to proceed");
+                    
                     $('#dialog-h').text("Unlucky");
                     $('#dialog-p').text("Must roll a 6 to proceed");
                     $('#roll-button').text("Next Turn").off("click").on("click", function() { turnOver(false) });
@@ -132,6 +163,7 @@ function rollDice()
                     $("#roll-button").off("click");
                     $('#roll-button').text("Continue").on("click", function() {
                         document.getElementById("dialog-box").close();
+                        socket.emit("dialog-close");
                     });
                 }
             }
@@ -146,17 +178,19 @@ function rollDice()
                 
                 $("#die-1").on("click", function() {
                     dice = dice1;
+                    socket.emit("dialog-close");
                     document.getElementById("dialog-box").close();
                 });
                 $("#die-2").on("click", function() {
                     dice = dice2;
+                    socket.emit("dialog-close");
                     document.getElementById("dialog-box").close();
                 });
             }
 
         }
             console.log("die should be done now");
-        }, 50 + i*50); // Queue these to make a cute animation
+        }, 50 + i*50);
     }
    
 }
@@ -194,6 +228,9 @@ function drawSquare(x, y, $canvas) {
 }
 
 function callbackPieceClicked(layer, pieceI, $canvas) {
+    if (playerTurn != player) 
+        return;
+    
     var turn = Number(pieceI[0]);
     var np = Number(pieceI[1]);
     if (turn != playerTurn) 
@@ -209,11 +246,12 @@ function callbackPieceClicked(layer, pieceI, $canvas) {
             mov = 1;
     }
     animatePieceMoving(layer, pieceI, turn, np, mov, $canvas);
+    socket.emit("pieceToMove", pieceI, turn, np, mov);
 }
 
 function victory(turn) {
+    socket.emit("victory", turn);
     winner = turn;
-    colours = ["Red", "Green", "Blue", "Yellow"];
     setTimeout(() => { 
         $('#dialog-h').text(colours[turn] + " wins!"); 
         $('#dialog-p').text("");
@@ -221,7 +259,7 @@ function victory(turn) {
         $('.dice').hide();
         if (!document.getElementById("dialog-box").open)
             document.getElementById("dialog-box").showModal();
-        }, 1000) // TODO: TEMP
+        }, 1000)
 }
 
 function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
@@ -251,11 +289,20 @@ function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
                             $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[1], {
                                 x: xx, y: yy-100
                             }, 200); 
+                            $canvas.animateLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[2], {
+                                x: xx, y: yy-100
+                            }, 200); 
+                            $canvas.setLayer($canvas.getLayerGroup("pieces" + i.toString() + j.toString())[2], {
+                                text: ""
+                            });
                         }
                     }
                 }
         }
-        turnOver();
+        if (player == turn) {
+            console.log("How many times are we calling this motherfucker");
+            turnOver(true, playerTurn);
+        }
         return;
     }
 
@@ -304,9 +351,13 @@ function animatePieceMoving(layer, pieceI, turn, np, mov, $canvas) {
         x: xx+50, y: yy-50
     }, 200);}
 
-function turnOver(wait = true) {
+function turnOver(wait = true, turn = playerTurn) {
+    if (started && turn === player) {
+        socket.emit("turnOver", wait, turn);
+        console.log("How many times is this being called?" + player);
+    }
     if (winner != -1) return;
-    playerTurn++;
+    playerTurn = turn+1;
     if (playerTurn > 3) playerTurn = 0;
     for (var i = 0; i < 4; ++i) {
         var layers = $('canvas').getLayerGroup("pieces" + playerTurn.toString() + i.toString());
@@ -317,9 +368,17 @@ function turnOver(wait = true) {
 
     $('canvas').drawLayers();
     setTimeout(() => { 
-        $('#dialog-h').text("It's your turn!"); // Todo: multiplayer
-        $('#dialog-p').text("Please roll the dice:");
-        $('#roll-button').show().off("click").text("Roll").on("click", rollDice)
+        $('.dice').show();
+        if (playerTurn == player) {
+            $('#dialog-h').text("It's your turn!"); 
+            $('#dialog-p').text("Please roll the dice:");
+            $('#roll-button').show().off("click").text("Roll").on("click", rollDice)
+        }
+        else {
+            $('#dialog-h').text(colours[playerTurn] + "'s turn");
+            $('#dialog-p').text("");    
+            $('#roll-button').hide().off("click")
+        }
         $('.dice').off('mouseenter mouseleave click');
         if (!document.getElementById("dialog-box").open)
             document.getElementById("dialog-box").showModal();
@@ -398,19 +457,23 @@ function drawPiece(x, y, colour, pieceI, $canvas) {
     ctx.stroke()*/
 }
 
+function readyUp() {
+    $('#roll-button').text("Unready").off("click").on("click", unready);
+    $('#dialog-p').text("Game will start when others are ready");
+    socket.emit("ready");
+}
+function unready() {
+    $('#roll-button').text("Ready").off("unready").on("click", readyUp);
+    $('#dialog-p').text("");
+    socket.emit("unready");
+}
+
 function initCanvas() {
     
     $.jCanvas.defaults.fromCenter = false;
     $.jCanvas.defaults.layer = true;
     var $canvas = $('canvas');
     
-    // DEFAULTS
-    $('canvas').keypress(function(event) { // TODO: TEMP
-        //if (event.key == "A") {
-            playerTurn++;
-            if (playerTurn > 3) playerTurn = 0;
-        //}
-    });
     document.getElementById("canvas").focus();
     $canvas.drawRect({
         fillStyle: "#EE2E31",
@@ -711,55 +774,13 @@ function initCanvas() {
     drawPiece(1100, 1300, "#fada5e", "32", $canvas);
     drawPiece(1300, 1300, "#fada5e", "33", $canvas);
 
-    $('#roll-button').on("click", rollDice);
+    $('#roll-button').on("click", readyUp);
     document.getElementById("dialog-box").showModal();
-
-    /*ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(100, 100, 400, 400);
-    ctx.strokeRect(100, 100, 400, 400);
-    ctx.fillRect(1000, 100, 400, 400);
-    ctx.strokeRect(1000, 100, 400, 400);
-    ctx.fillRect(100, 1000, 400, 400);
-    ctx.strokeRect(100, 1000, 400, 400);
-    ctx.fillRect(1000, 1000, 400, 400);
-    ctx.strokeRect(1000, 1000, 400, 400);
     
-    ctx.fillStyle = "#EE2E31";
-    drawCircle(200, 200, 50, ctx);
-    drawCircle(400, 200, 50, ctx);
-    drawCircle(200, 400, 50, ctx);
-    drawCircle(400, 400, 50, ctx);
-
-    ctx.fillStyle = "#32CD32";
-    drawCircle(1100, 200, 50, ctx);
-    drawCircle(1300, 200, 50, ctx);
-    drawCircle(1100, 400, 50, ctx);
-    drawCircle(1300, 400, 50, ctx);
-
-    ctx.fillStyle = "#00bfff";
-    drawCircle(200, 1100, 50, ctx);
-    drawCircle(400, 1100, 50, ctx);
-    drawCircle(200, 1300, 50, ctx);
-    drawCircle(400, 1300, 50, ctx);
-
-    ctx.fillStyle = "#fada5e";
-    drawCircle(1100, 1100, 50, ctx);
-    drawCircle(1300, 1100, 50, ctx);
-    drawCircle(1100, 1300, 50, ctx);
-    drawCircle(1300, 1300, 50, ctx);
-
-    ctx.fillStyle = "#EE2E31";
-    drawPiece(200, 200, ctx);
-    drawPiece(400, 200, ctx);
-    drawPiece(200, 400, ctx);
-    drawPiece(400, 400, ctx);*/
-    
-    // TEMP
-
     pieces = [[new piece(), new piece(), new piece(), new piece()],
               [new piece(), new piece(), new piece(), new piece()],
               [new piece(), new piece(), new piece(), new piece()],
-              [new piece(), new piece(), new piece(), new piece()]  ]
+              [new piece(), new piece(), new piece(), new piece()]]
 }
 
 window.onload = initCanvas();//initialisePieces();  
