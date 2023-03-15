@@ -79,6 +79,8 @@ var player = -1;
 var playerTurn = -1;
 var started = false;
 
+var dice = 0;
+
 var pieces = [];
 
 function randomInt(min, max)
@@ -129,6 +131,8 @@ socket.on("winner", function(win) {
 function rollDice()
 {
     $('#roll-button').off("click");
+    var dice1 = 0;
+    var dice2 = 0;
 
     var random_timer = randomInt(10, 20);
     var roll_timer = 0;
