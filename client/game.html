@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>FalLUDOfields</title>
+        <link rel="stylesheet" href="gameBoard.css">            
+</head>
+
+<body>
+    <div class="board">
+        <canvas tabindex='1' id="canvas" width="1500" height="1500" style="border:1px solid #000000;"></canvas>
+    </div>
+
+    <dialog id="dialog-box">
+        <div id="dialog-container">
+            <h3 id="dialog-h">Waiting for players...</h3>
+            <p id="dialog-p"></p>
+            <div class="dice-wrapper">
+                <img hidden class="dice" src="dice-1.svg" id="die-1">
+                <img hidden class="dice" src="dice-2.svg" id="die-2">
+            </div>
+            <button id="roll-button">Ready</button>
+        </div>
+    </dialog>
+
+    <script src="./dependencies/jquery-3.6.3.min.js"></script>
+    <script src="./dependencies/jcanvas.min.js"></script>
+    <script src="./dependencies/socket.io.min.js"></script>
+    <script src="game.js"></script>
+</body>
+
+</html> 
