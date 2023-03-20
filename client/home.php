@@ -35,10 +35,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
                 <button onclick="window.location.href = 'game.html';" class="playbutton">
                         <h4>Play</h4>
                 </button>
-                <button onclick="window.location.href = 'contact.html';" class="playbutton">
-                        <h4>Contact Players</h4>
-                </button>
-                <button onclick="window.location.href = 'leaderboard.html';" class="leaderboardbutton">
+                <button onclick="window.location.href = 'tc.html';" class="leaderboardbutton">
                         <h1>Leaderboard</h1>
                 </button>
         </section>
